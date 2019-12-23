@@ -1,0 +1,36 @@
+{
+  "name": "onestlatech-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "all": "node -r dotenv/config ./parser/parser.js && next build && node -r dotenv/config ./server/server.js",
+    "start": "node -r dotenv/config ./server/server.js",
+    "build": "next build",
+    "parse": "node -r dotenv/config ./parser/parser.js",
+    "next": "next start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^18.4.0",
+    "@hapi/joi": "^16.1.8",
+    "axios": "^0.19.0",
+    "dotenv": "^8.2.0",
+    "isomorphic-unfetch": "^3.0.0",
+    "js-xlsx": "^0.8.22",
+    "micro-cors": "^0.1.1",
+    "mongoose": "^5.8.2",
+    "next": "^9.1.6",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "request": "^2.88.0",
+    "xlsx": "^0.15.3",
+    "yaml": "^1.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2",
+    "webpack": "^4.41.4"
+  }
+}

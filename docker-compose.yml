@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+
+  webapp:
+    build: ./
+    working_dir: /app
+    volumes:
+        - ./:/app
+    ports:
+      - 3000:3000
+    command: npm run all
+    env_file: .env.docker
+    links:
+      - mongo
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+
+
+
+
+
+
+
