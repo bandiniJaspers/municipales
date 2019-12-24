@@ -1,5 +1,7 @@
 import React, {useState, useEffect, Fragment} from 'react'
 import Link  from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import fetch from 'isomorphic-unfetch';
 import getConfig from 'next/config'
 import Head from 'next/head';
@@ -128,26 +130,33 @@ const Index = (props) => {
 
 const ListElement = ({lrem}) => (
     <li>
-        <div className={"content"}>
+        <div className={"name"}>
         <Link href={{pathname:"/fiche", query: {id:lrem._id}}}>
             <a>{`${lrem.nom} ${lrem.prenom}`}</a>
         </Link>
         </div>
-        <div>
+        <div className={"profil"}>
             <Link href={{pathname:"/fiche", query: {id:lrem._id}}}>
                 <a className={'font-black'}>Voir son profil</a>
             </Link>
+        </div>
+        <div className={"icon"}>
+            <FontAwesomeIcon icon={faArrowRight} className={"icon"}/>
         </div>
         <style jsx>
             {`
                 .font-black {
                     color: #252422;
                 }
+                .profil {
+                    widht:30%;
+                }   
                 a {
                     color:white;
                     text-decoration:none;
                 }
-                .content {
+             
+                .name {
                     width:50%;
                     margin-right:10px;
                     background-color:#252422;
@@ -164,6 +173,7 @@ const ListElement = ({lrem}) => (
                     flex-direction:row;
                     text-align:center; 
                     font-size: 20px; 
+                    justify-content: space-between;
                     margin-bottom:20px;
                 }
             `}

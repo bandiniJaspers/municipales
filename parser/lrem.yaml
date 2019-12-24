@@ -2,67 +2,78 @@
   nom: darrouzet
   prenom: xavier
   sedissimule: 1
-  preuve: "Un article de liberation : https://www.liberation.fr/checknews/2019/10/23/municipales-des-candidats-en-marche-se-presentent-ils-sans-etiquette_1759224"
+  sources: ["https://www.liberation.fr/checknews/2019/10/23/municipales-des-candidats-en-marche-se-presentent-ils-sans-etiquette_1759224"]
   affiliation: "La république en Marche"
+  commune:
 2:
   nom: caudron
   prenom: christophe
   sedissimule: 0
-  preuve:
+  sources:
   affiliation: "La république en Marche"
+  commune:
 3:
   nom: cayeux
   prenom: caroline
   sedissimule: 0
-  preuve:
+  sources:
   affiliation: "La république en Marche"
+  commune:
 4:
   nom: degallaix
   prenom: laurent
   sedissimule: 0
-  preuve:
+  sources:
   affiliation: "La république en Marche"
+  commune:
 5:
   nom: delbar
   prenom: guillaume
   sedissimule: 0
-  preuve:
+  sources:
   affiliation: "La république en Marche"
+  commune:
 6:
   nom: leca
   prenom: daniel
   sedissimule: 0
-  preuve:
+  sources:
   affiliation: "La république en Marche"
+  commune:
 7:
   nom: lerouge
   prenom: jean-pascal
   sedissimule: 0
-  preuve:
+  sources:
   affiliation: "La république en Marche"
+  commune:
 8:
   nom: saudemont
   prenom: caroline
   sedissimule: 0
-  preuve:
+  sources:
   affiliation: "La république en Marche"
+  commune:
 9:
   nom: savio
   prenom: nelly
   sedissimule: 0
-  preuve:
+  sources:
   affiliation: "La république en Marche"
+  commune:
 10:
   nom: spillebout
   prenom: violette
   sedissimule: 0
-  preuve:
+  sources:
   affiliation: "La république en Marche"
+  commune:
 11:
   nom: vergriete
   prenom: patrice
   sedissimule: 0
-  preuve:
+  sources:
   affiliation: "La république en Marche"
+  commune:
 
 

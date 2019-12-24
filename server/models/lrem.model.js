@@ -6,8 +6,9 @@ const LremSchema = new Schema({
     nom: {required: true, type:String},
     prenom: {required: true, type:String},
     sedissimule:Boolean | null,
-    preuve: String | null,
-    affiliation: String | null
+    sources: [String] | null,
+    affiliation: String | null,
+    commune: String | null
 })
 
 module.exports = mongoose.model('Lrem', LremSchema);
