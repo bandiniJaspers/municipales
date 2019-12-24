@@ -1,6 +1,5 @@
 //const { parsed: localEnv } = require('dotenv').config();
 const webpack = require('webpack');
-const config = require("./config");
 const dotenv = require("dotenv");
 
 dotenv.config();
