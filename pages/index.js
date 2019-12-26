@@ -5,6 +5,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import fetch from 'isomorphic-unfetch';
 import getConfig from 'next/config'
 import Head from 'next/head';
+import '../assets/sass/global.sass'
 
 const Index = (props) => {
     const [ lrems, setLrems] = useState([]);
@@ -35,17 +36,12 @@ const Index = (props) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta charSet="utf-8" />
             </Head>
-            <style jsx global>{`
-                  body { 
-                    margin:0;
-                    background-color: white;
-                  }
-    `}</style>
+
         <div className={'container'}>
             <div className={'header'}>
                 <h1>Qui se cache derrière vos candidats ?</h1>
                 <div className={'header-content'}>
-                    Rentrez son nom et voyez le parcours de vos candidats pour les municipales
+                    Rentrez son nom, son prénom et voyez le parcours de vos candidats pour les municipales !
                 </div>
             </div>
             <div className={'content'}>
@@ -60,70 +56,6 @@ const Index = (props) => {
                 </div>
             </div>
         </div>
-        <style jsx>
-            {`
-                .mt-md {
-                    margin-top: 5rem;
-                }
-                .mb-md {
-                    margin-bottom: 5rem;
-                }
-                .size-md {
-                    font-size: 20px;
-                }
-                .size-small {
-                    font-size: 10px;
-                }
-                .header { 
-                            width: 100%;
-                            display: flex;
-                            flex-direction: column;
-                            text-align:center;
-                            align-items:center;
-                            margin-bottom:3rem;
-                            
-                        }
-                h1 {
-                                max-width:300px;
-                            }
-                .container { 
-                    display:flex;
-                    justify-content:center;
-                    flex-direction:column;
-                    align-items:center;
-                }
-                a {
-                    color:black;
-                    text-decoration:none;
-                }
-                input {
-                    width:80%;
-                    height:50px;
-                    border:none;
-                    border-bottom:4px solid #CF7830;
-                
-                    color:#F35A31;
-                }
-                
-                .lrem-list {
-                    width:80%;
-                    display:flex;
-                    flex-direction:column;
-                    justify-content:center;
-                }
-                .content {
-                    width:100%;
-                    display:flex;
-                    flex-direction:column;
-                    align-items:center;
-                }
-                ul {
-                    list-style:none; 
-                    max-width:600px; 
-                    justify-content: space-between;
-                }
-            `}
-        </style>
         </Fragment>
     )
 };
@@ -131,53 +63,16 @@ const Index = (props) => {
 const ListElement = ({lrem}) => (
     <li>
         <div className={"name"}>
-        <Link href={{pathname:"/fiche", query: {id:lrem._id}}}>
-            <a>{`${lrem.nom} ${lrem.prenom}`}</a>
-        </Link>
+            {`${lrem.nom} ${lrem.prenom}`}
         </div>
         <div className={"profil"}>
             <Link href={{pathname:"/fiche", query: {id:lrem._id}}}>
-                <a className={'font-black'}>Voir son profil</a>
+                <a className={'font-black'}>
+                  Voir son profil
+                  <FontAwesomeIcon icon={faArrowRight} className={"icon"}/>
+                </a>
             </Link>
         </div>
-        <div className={"icon"}>
-            <FontAwesomeIcon icon={faArrowRight} className={"icon"}/>
-        </div>
-        <style jsx>
-            {`
-                .font-black {
-                    color: #252422;
-                }
-                .profil {
-                    widht:30%;
-                }   
-                a {
-                    color:white;
-                    text-decoration:none;
-                }
-             
-                .name {
-                    width:50%;
-                    margin-right:10px;
-                    background-color:#252422;
-                    color:white;
-                    display:flex;
-                    justify-content:center;
-                    align-items:center;
-                    height:50px; 
-                }
-                li {
-                    cursor: pointer;
-                    display:flex; 
-                    align-items:center;
-                    flex-direction:row;
-                    text-align:center; 
-                    font-size: 20px; 
-                    justify-content: space-between;
-                    margin-bottom:20px;
-                }
-            `}
-        </style>
     </li>
 )
 

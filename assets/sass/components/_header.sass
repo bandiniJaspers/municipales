@@ -1,0 +1,22 @@
+@import '../var/mixins'
+@import '../var/fonts'
+@import '../var/colors'
+
+.header
+  width: 100%
+  display: flex
+  flex-flow: column nowrap
+  align-items: center
+  color: $black
+
+  h1
+    font-family: "Muli"
+    font-weight: 800
+    font-style: normal
+    text-align: center
+    font-size: 48px
+    max-width: 80%
+
+  +media(desktop)
+    width: 50%
+    margin: 0 auto

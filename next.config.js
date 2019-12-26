@@ -1,6 +1,9 @@
 //const { parsed: localEnv } = require('dotenv').config();
 const webpack = require('webpack');
 const dotenv = require("dotenv");
+const withSass = require('@zeit/next-sass');
+const withFonts = require('nextjs-fonts');
+
 
 dotenv.config();
 
@@ -11,3 +14,9 @@ module.exports = {
         API_URL: `http://${process.env.API_URL}:${process.env.PORT}`
     }
 }
+
+module.exports = withSass(withFonts({
+  webpack(config, options) {
+    return config;  }
+  }
+));

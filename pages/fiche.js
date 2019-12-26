@@ -19,7 +19,7 @@ const Name = ({firstname, lastname}) => {
                         display:flex;
                         justify-content:center;
                         align-items:center;
-                        height:50px; 
+                        height:50px;
                     }
                 `}
             </style>
@@ -58,7 +58,7 @@ const Sources = ({affiliation, sources}) => {
     return (
         <div className={'mb-medium'}>
             <div className={'title'}>
-                <strong>{`Cette personne refuse d'afficher son appartenance au partie ${affiliation}`}</strong>
+                <strong>{`Cette personne refuse d'afficher son appartenance au parti ${affiliation}`}</strong>
             </div>
             <div className={"title mb-medium"}>
                 <strong>Source(s)</strong>
@@ -71,12 +71,12 @@ const Sources = ({affiliation, sources}) => {
                     .mb-medium {
                         margin-bottom:30px;
                     }
-                    
+
                     .title {
                         font-size:25px;
                     }
                     ul {
-                    list-style:none; 
+                    list-style:none;
                     justify-content: space-between;
                     }
                     li {
@@ -131,7 +131,7 @@ const Fiche = (props) => {
                         margin-left:25%;
                         margin-top:15%;
                     }
-                    .main { 
+                    .main {
                         display:flex;
                         flex-direction:row;
                         justify-content:space-between;
