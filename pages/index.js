@@ -78,7 +78,6 @@ const ListElement = ({lrem}) => (
 
 Index.getInitialProps = async () => {
     const {publicRuntimeConfig} = getConfig()
-
     try {
         const res = await fetch(`${publicRuntimeConfig.API_URL}/lrem`);
         const data = await res.json();

@@ -4,7 +4,7 @@ const path = require('path');
 const Inert = require("@hapi/inert");
 const Mongoose = require("mongoose");
 const routes = require('./routes/index');
-
+console.log("Routes::", routes);
 const { defaultHandlerWrapper, nextHandlerWrapper, pathWrapper} = require('./nextWrapper');
 const app = next({dev: true})
 
@@ -19,9 +19,9 @@ const server = new Hapi.Server({
     }
 })
 
-console.log("AssetPath::", path.join(__dirname, 'public'))
+console.log("AssetPatsddsh::", path.join(__dirname, 'public'))
 Mongoose.connect(`${process.env.MONGO_URL}:${process.env.MONGO_PORT}/lremoupas`);
-
+console.log("Servesddsr Read::");
 (async () => {
     await server.register(Inert);
 
@@ -40,11 +40,19 @@ Mongoose.connect(`${process.env.MONGO_URL}:${process.env.MONGO_PORT}/lremoupas`)
             method: "GET",
             path: "/fiche/{id}",
             // This method get the request from the client and return
-            // the result of the about.js file
+            // the result of the fiche.js file
             handler: async (request, h) => {
                 return pathWrapper(app, "/fiche")
             }
         },
+        /*{
+            method: "GET",
+            path: "/admin",
+            handler: async (request, h) => {
+                console.log("Get admin pagdsdse")
+                return pathWrapper(app, "/admin")
+            }
+        },*/
         {
             method: 'GET',
             path: '/public/{file*}',
@@ -62,5 +70,5 @@ Mongoose.connect(`${process.env.MONGO_URL}:${process.env.MONGO_PORT}/lremoupas`)
 
 
     await server.start();
-    console.log('Server running on %s', server.info.uri);
+    console.log('Server runnidsng on %s', server.info.uri);
 })();
