@@ -80,7 +80,7 @@ Je ne sais pas
                                 </Field>
                                 <Field name={"hiddenLrem"} type={"checkbox"}>
                                     {props => {
-                                        return <FieldCheckbox {...props} label={"estLREM"} name={"hiddenLrem"} />
+                                        return <FieldCheckbox {...props} label={"Cache son appartenance a LREM"} name={"hiddenLrem"} />
                                     }}
                                 </Field>
                                 {values.hiddenLrem &&
@@ -92,7 +92,7 @@ Je ne sais pas
                                     }}
                                 </Field>
                                 <div className={'form-btn'}>
-                                    <button type={"submit"}/>
+                                    <button type={"submit"}>Enregistrer</button>
                                 </div>
                             </form>
                         )

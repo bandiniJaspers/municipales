@@ -44,7 +44,6 @@ const resolveData = datas => {
 const formatObject = (obj) => {
     let sources = []
     for (let [key, value] of Object.entries(obj)) {
-        console.log("formatObject::", obj);
         if (key.includes("Source"))
             sources.push(obj[key])
     }

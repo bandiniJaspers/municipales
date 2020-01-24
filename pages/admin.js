@@ -15,6 +15,21 @@ const Admin = () => {
 
     const onSubmit = (data) => {
         console.log("Submit::", data);
+        fetch("lrem", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                // Validation data coming from a form usually
+                ...data
+            })
+        }).then(function (response) {
+            console.log("Response::", response.json())
+            return response.json();
+        })
+
     }
     useEffect(() => {
         (async function() {
@@ -34,6 +49,7 @@ const Admin = () => {
     }, [selectedCommune])
     const closeModal = () => setIsOpen(false);
     const openModal = () => setIsOpen(true);
+
     const search = (e) => {
         const reg = new RegExp(e.target.value, 'i')
         const updatedCommunes =  defaultCommunes.filter((c) => c.nom.match(reg))

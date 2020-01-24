@@ -1,4 +1,4 @@
-const LremModel = require('../models/lrem.model');
+const PoliticModel = require('../models/lrem.model');
 
 module.exports = [
     {
@@ -6,7 +6,8 @@ module.exports = [
         path: "/lrem",
         handler: async (request, h) => {
             try {
-                const allLrem = await LremModel.find().exec();
+                const allLrem = await PoliticModel.find().exec();
+
                 return h.response(allLrem);
             } catch (error) {
                 return h.response(error).code(500);
@@ -19,7 +20,8 @@ module.exports = [
         handler: async (request, h) => {
             try {
                 const id = request.params.id;
-                const fiche = await LremModel.findById(id).exec();
+                const fiche = await PoliticModel.findById(id).exec();
+
                 return h.response(fiche);
             } catch (error) {
                 return h.response(error).code(500);
@@ -32,11 +34,9 @@ module.exports = [
         handler: async (request, h) => {
             try {
                 let code = request.query.codeCommune;
-                console.log("GEt Lrem::", code);
                 let query = {codeCommune: code}
 
-                let lrems = await LremModel.find(query).exec();
-                console.log("Get LREM::", lrems);
+                let lrems = await PoliticModel.find(query).exec();
                 return h.response(JSON.stringify(lrems)).code(200);
             } catch(error) {
                 h.response(error).code(404)
@@ -53,9 +53,22 @@ module.exports = [
 
                 let query = {nom: new RegExp(search, 'i')}
 
-                let lrem = await LremModel.find(query).exec();
+                let lrem = await PoliticModel.find(query).exec();
 
                 return h.response(JSON.stringify(lrem)).code(200);
+            } catch(error) {
+                h.response(error).code(404)
+            }
+        }
+    },
+    {
+        method: "POST",
+        path: "/lrem",
+        handler: async (request, h) => {
+            try {
+                const newPolitic = new PoliticModel({...request.payload})
+                const req = await newPolitic.save();
+                return h.response(req).code(200);
             } catch(error) {
                 h.response(error).code(404)
             }

@@ -4,7 +4,7 @@ const path = require('path');
 const Inert = require("@hapi/inert");
 const Mongoose = require("mongoose");
 const routes = require('./routes/index');
-console.log("Routes::", routes);
+
 const { defaultHandlerWrapper, nextHandlerWrapper, pathWrapper} = require('./nextWrapper');
 const app = next({dev: true})
 
@@ -19,10 +19,11 @@ const server = new Hapi.Server({
     }
 })
 
-console.log("AssetPatsddsh::", path.join(__dirname, 'public'))
-Mongoose.connect(`${process.env.MONGO_URL}:${process.env.MONGO_PORT}/lremoupas`);
-console.log("Servesddsr Read::");
+
+const mongoDB = 'lremoupas';
 (async () => {
+    const mongoClient = await Mongoose.connect(`${process.env.MONGO_URL}:${process.env.MONGO_PORT}/${mongoDB}`);
+    //server.app.mongoClient = mongoClient.db(mongoDB)
     await server.register(Inert);
 
     server.route(routes.concat(
