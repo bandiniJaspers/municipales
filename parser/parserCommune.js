@@ -37,7 +37,7 @@ const saveData = async data => {
         return
     const communeModel = {
         nom: data["__EMPTY_5"],
-        codeCommune: data["__EMPTY_4"],
+        codeCommune: data["__EMPTY_1"] + data["__EMPTY_4"],
         popmun:data["__EMPTY_6"],
         poppart:data["__EMPTY_7"],
         poptotal: data["__EMPTY_8"],

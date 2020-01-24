@@ -28,6 +28,23 @@ module.exports = [
     },
     {
         method: "GET",
+        path: "/lrem/commune",
+        handler: async (request, h) => {
+            try {
+                let code = request.query.codeCommune;
+                console.log("GEt Lrem::", code);
+                let query = {codeCommune: code}
+
+                let lrems = await LremModel.find(query).exec();
+                console.log("Get LREM::", lrems);
+                return h.response(JSON.stringify(lrems)).code(200);
+            } catch(error) {
+                h.response(error).code(404)
+            }
+        }
+    },
+    {
+        method: "GET",
         path: "/lrem/search",
         handler: async (request, h) => {
             try {

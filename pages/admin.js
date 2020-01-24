@@ -1,9 +1,9 @@
 import React, {useState, useEffect, Fragment} from 'react';
 import fetch from 'isomorphic-unfetch'
-import getConfig from 'next/config'
+
 import '../assets/sass/global.sass'
 import CreateModal from '../components/CreateModal'
-
+import DisplayPolitics from '../components/DisplayPolitics/DisplayPolitics'
 
 const Admin = () => {
     const [communes, setCommunes] = useState([])
@@ -29,6 +29,9 @@ const Admin = () => {
         }())
     }, [])
 
+    useEffect(() => {
+        console.log("SelectedCommune", selectedCommune);
+    }, [selectedCommune])
     const closeModal = () => setIsOpen(false);
     const openModal = () => setIsOpen(true);
     const search = (e) => {
@@ -51,10 +54,10 @@ const Admin = () => {
     return (
         <div className={'commune_container'}>
             <div className={'main_commune'}>
-            <div className={'filter_container'}>
+                {/*<div className={'filter_container'}>
                 <div>Toutes les communes</div>
                 <div>- de 9000 habitants</div>
-            </div>
+            </div>*/}
             <div className={'header'}>
                 <h1>Rechercher par commune ?</h1>
                 {defaultCommunes.length > 0 &&
@@ -80,8 +83,10 @@ const Admin = () => {
             </div>
             <CreateModal toggle={closeModal} isOpen={isOpen} onSubmit={onSubmit} communes={communes.slice(0, 30).map((c) => ({label:c.nom, code:c.codeCommune, value:c._id}))}/>
             </div>
-            <div className={"selected_commune"}>
-
+            <div className={"content"}>
+                {selectedCommune &&
+                    <DisplayPolitics codeCommune={selectedCommune.codeCommune}/>
+                }
             </div>
         </div>
     )

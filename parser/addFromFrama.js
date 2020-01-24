@@ -64,7 +64,7 @@ const addLremFromFrama = async () => {
         const lrems = xlDataFrama.map((fd, idx) => {
             const index = xlData.findIndex((d) => d.hasOwnProperty("__EMPTY_5") && d["__EMPTY_5"].toLowerCase() === fd.Commune.toLowerCase());
             if (index > -1)
-                return {...xlDataFrama[idx], codeCommune:xlData[index]["__EMPTY_4"]}
+                return {...xlDataFrama[idx], codeCommune:xlData[index]["__EMPTY_1"] + xlData[index]["__EMPTY_4"]}
             return {...xlDataFrama[idx], codeCommune:"NULL"}
         })
         resolveData(lrems).then(() => {
