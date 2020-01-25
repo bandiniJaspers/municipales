@@ -27,7 +27,8 @@ const Admin = () => {
             },
             body: JSON.stringify({
                 // Validation data coming from a form usually
-                ...data
+                ...data,
+                commune:data.commune.label
             })
         }).then(function (response) {
             if (response.status === 200) {

@@ -2,19 +2,19 @@ import React, {Fragment} from 'react'
 import { Modal, ModalBody, ModalHeader} from 'reactstrap';
 import { Form, Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
-import {FieldAsyncSelect, FieldCheckbox, FieldSelect, TextInput} from './FinalForm/TextInput'
+import {FieldAsyncSelect, FieldCheckbox, FieldSelect, required, requiredArray, TextInput} from './FinalForm/TextInput'
 import arrayMutators from 'final-form-arrays'
 import fetch from 'isomorphic-unfetch'
 
 const SourceArray = () => {
     return (
-    <FieldArray name="sources">
+    <FieldArray name="sources" validate={requiredArray}>
         {({ fields }) => {
             return (
                 <Fragment>
-                    <div onClick={() => {fields.push('')}}>Ajouter une source</div>
+                    <div className={'add-source'} onClick={() => {fields.push('')}}>Ajouter une source</div>
                 {fields.map((field, idx) => {
-                    return (<Field key={idx} name={field}>
+                    return (<Field key={idx} name={field} validate={required}>
                         {props => {
                             return <TextInput {...props} label={""} placeholder={"Source..."} />
                         }}
@@ -61,17 +61,17 @@ Je ne sais pas
                         console.log("Values::", values);
                         return (
                             <form onSubmit={handleSubmit}>
-                                <Field name={"nom"}>
+                                <Field name={"nom"} validate={required}>
                                     {props => {
                                         return <TextInput {...props} label={""} placeholder={"Nom"} />
                                     }}
                                 </Field>
-                                <Field name={"prenom"}>
+                                <Field name={"prenom"} validate={required}>
                                     {props => {
                                         return <TextInput {...props} label={""} placeholder={"Prenom"} />
                                     }}
                                 </Field>
-                                <Field name={"affiliation"}>
+                                <Field name={"affiliation"} validate={required}>
                                     {props => {
                                         return <TextInput {...props} label={""} placeholder={"Parti politique"} />
                                     }}
@@ -84,7 +84,7 @@ Je ne sais pas
                                 {values.hiddenLrem &&
                                     <SourceArray />
                                 }
-                                <Field name={"commune"}>
+                                <Field name={"commune"} validate={required}>
                                     {props => {
                                         return <FieldAsyncSelect {...props} className={'create-select'} onChange={(value) => {mutators.setCommune(value); mutators.setCodeCommune(value.code);}} label={"commune"} placeholder={"Commune"} />
                                     }}

@@ -3,6 +3,14 @@ import Select from 'react-select'
 import AsyncSelect from 'react-select/async';
 import fetch from 'isomorphic-unfetch'
 
+export const required = value => {
+    if (!value)
+        return "Obligatoire"
+    return undefined
+}
+
+export const requiredArray = value => value && value.length > 0 ? undefined : 'Required';
+
 export const FieldCheckbox = ({name, onChange, input, disabled = false, className, label, value}) => {
     return (
         <div className={className}>
@@ -22,15 +30,16 @@ export const FieldCheckbox = ({name, onChange, input, disabled = false, classNam
 export const TextInput = ({disabled = false, label, placeholder, input, className, meta: {touched, error}}) => {
     return (
         <div className={className}>
+            {touched && error && (
+                <span className="form__form-group-error formError">{error}</span>
+            )}
             <label>{label}</label>
             <input
                 type={"text"}
                 disabled={disabled}
                 placeholder={placeholder}
                 {...input} />
-            {touched && error && (
-                <span className="form__form-group-error formError">{error}</span>
-            )}
+
         </div>
     )
 }

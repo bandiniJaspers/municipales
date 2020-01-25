@@ -2,13 +2,28 @@
 @import '../var/colors'
 
 .create_modal_container
+  .add-source
+    display: flex
+    justify-content: center
+    background-color: $orange
+    cursor: pointer
+    padding: 10px
+  .form-btn
+    display: flex
+    justify-content: center
+    button
+      cursor: pointer
+      border: none
+      background-color: $orange
+      padding: 20px
+
   .modal-content
     background-color: $beige
   .create-politic-checkbox
     display: flex
     flex-direction: row
     align-items: center
-    color: $orange
+    color: $black
 
     input
       flex: 1
@@ -18,7 +33,7 @@
     background-color: $beige
     border: 0
     font-size: 24px
-    color: $orange
+    color: $black
     border-bottom: 5px solid $orange
     padding: 10px 0
     margin-bottom: 30px
@@ -35,10 +50,10 @@
       border-bottom: 5px solid $orange
 
     .create-politic__placeholder
-      color: $orange
+      color: $black
 
     .create-politic__single-value
-      color: $orange
+      color: $black
       background-color: $beige
 
     .create-politic__input
