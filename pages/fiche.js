@@ -3,7 +3,7 @@ import Link  from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import fetch from 'isomorphic-unfetch'
-import '../../../municipales/front/assets/sass/global.sass'
+import '../front/assets/sass/global.sass'
 const Name = ({firstname, lastname}) => {
     return (
         <Fragment>

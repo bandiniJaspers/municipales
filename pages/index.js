@@ -1,7 +1,7 @@
 import React, {useState, useEffect, Fragment} from 'react';
 import fetch from 'isomorphic-unfetch'
 
-import '../../../municipales/front/assets/sass/global.sass'
+import '../front/assets/sass/global.sass'
 import CreateModal from '../front/components/CreateModal'
 import DisplayPolitics from '../front/components/DisplayPolitics/DisplayPolitics'
 import Menu from '../front/components/Menu/Menu';

@@ -3,7 +3,8 @@ version: "3.7"
 services:
 
   webapp:
-    build: ./
+    build:
+      context: ./
     working_dir: /app
     volumes:
         - ./:/app

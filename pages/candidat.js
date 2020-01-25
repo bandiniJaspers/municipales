@@ -5,7 +5,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import fetch from 'isomorphic-unfetch';
 import getConfig from 'next/config'
 import Head from 'next/head';
-import '../../../municipales/front/assets/sass/global.sass'
+import '../front/assets/sass/global.sass'
 
 const Candidat = (props) => {
     const [ lrems, setLrems] = useState([]);
