@@ -7,12 +7,13 @@ dotenv.config();
 Mongoose.connect(`${process.env.MONGO_URL}:${process.env.MONGO_PORT}/lremoupas`);
 const connection = Mongoose.connection;
 
-const LremModel = require('../server/models/lrem.model');
+const PoliticModel = require('../server/models/lrem.model');
 
 connection.once("open", function() {
     dropCollection();
 })
 
+// we erase first the collection
 const dropCollection = () => {
     connection.db.dropCollection(
         "lrems",
@@ -23,17 +24,19 @@ const dropCollection = () => {
     );
 }
 
+
+//save data to mongoose
 const saveData = async data => {
-    console.log("SaveData::", data);
     const basicModel = {
         nom:data.Prenom,
         prenom:data.Nom,
+        commune:data.commune,
         hiddenLrem:data.hiddenLrem,
         sources:data.sources,
         codeCommune: data.codeCommune,
         affiliation:data.affiliation
     }
-    let newLrem = new LremModel({...basicModel, ...data});
+    let newLrem = new PoliticModel({...basicModel, ...data});
     return newLrem.save();
 }
 
@@ -41,6 +44,7 @@ const resolveData = datas => {
     return Promise.all(datas.map((data) => saveData(formatObject(data))))
 }
 
+// catch all the Source_NB col in the frame and push it into an array
 const formatObject = (obj) => {
     let sources = []
     for (let [key, value] of Object.entries(obj)) {
@@ -49,6 +53,7 @@ const formatObject = (obj) => {
     }
     return {...obj, sources:sources, hiddenLrem: sources.length > 0}
 }
+
 const addLremFromFrama = async () => {
     try {
         const workbook = XLSX.readFile(`${__dirname}/communepop.xls`);
@@ -63,8 +68,8 @@ const addLremFromFrama = async () => {
         const lrems = xlDataFrama.map((fd, idx) => {
             const index = xlData.findIndex((d) => d.hasOwnProperty("__EMPTY_5") && d["__EMPTY_5"].toLowerCase() === fd.Commune.toLowerCase());
             if (index > -1)
-                return {...xlDataFrama[idx], codeCommune:xlData[index]["__EMPTY_1"] + xlData[index]["__EMPTY_4"]}
-            return {...xlDataFrama[idx], codeCommune:"NULL"}
+                return {...xlDataFrama[idx], commune:xlData[index]["__EMPTY_5"], codeCommune:xlData[index]["__EMPTY_1"] + xlData[index]["__EMPTY_4"]}
+            return {...xlDataFrama[idx], commune:null, codeCommune:null}
         })
         resolveData(lrems).then(() => {
             console.log("Les informations ont bien été enregistré en bdd")
@@ -77,6 +82,6 @@ const addLremFromFrama = async () => {
     }
     catch (e)  {
         console.log("Une erreur est survenu", e);
-        //Mongoose.connection.close();
+        Mongoose.connection.close();
     }
 }

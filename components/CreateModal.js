@@ -29,7 +29,6 @@ const SourceArray = () => {
 }
 
 const CreateModal = ({isOpen, toggle, onSubmit, communes}) => {
-    console.log("CreateModal::", communes);
     /*
     INVESTI
 SOUTENU
@@ -48,10 +47,6 @@ Je ne sais pas
         }
     }
 
-    const onUpdateCommune = (value) => {
-        console.log("onUpdateCommune", e, value);
-        mutators.setCommune(value);
-    }
     return (
         <Modal isOpen={isOpen} toggle={toggle}>
             <ModalHeader toggle={toggle}>Creer un candidat</ModalHeader>
@@ -70,12 +65,12 @@ Je ne sais pas
                                 </Field>
                                 <Field name={"prenom"}>
                                     {props => {
-                                        return <TextInput {...props} label={"Prenom"} placeholder={"Nom"} />
+                                        return <TextInput {...props} label={"Prenom"} placeholder={"Prenom"} />
                                     }}
                                 </Field>
                                 <Field name={"affiliation"}>
                                     {props => {
-                                        return <TextInput {...props} label={"Parti politique"} placeholder={"Nom"} />
+                                        return <TextInput {...props} label={"Parti politique"} placeholder={"Parti politique"} />
                                     }}
                                 </Field>
                                 <Field name={"hiddenLrem"} type={"checkbox"}>

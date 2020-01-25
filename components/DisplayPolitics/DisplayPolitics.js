@@ -16,25 +16,33 @@ const ModalPolitic = ({isOpen, close, politic}) => {
     )
 }
 
-const DisplayPolitics = ({codeCommune}) => {
+const DisplayPolitics = ({codeCommune, reload, setReload}) => {
     const [politics, setPolitics] = useState([]);
     const [selectedPolitic, setSelectedPolitic] = useState(null);
     const [openModal, setOpenModal] = useState(false);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        (async function() {
-            setLoading(true);
-            const res = await fetch(`lrem/commune?codeCommune=${codeCommune}`);
-            const result = await res.json();
-            if (result.length > 0) {
-                console.log("Result::", result);
-                setPolitics(result);
-                setLoading(false);
-            }
-        }())
+        loadPolitics();
     }, [codeCommune])
 
+    useEffect(() => {
+        loadPolitics();
+    }, [reload])
+
+    const loadPolitics = async () => {
+        setLoading(true);
+        const res = await fetch(`lrem/commune?codeCommune=${codeCommune}`);
+        const result = await res.json();
+        if (result.length > 0) {
+            setPolitics(result);
+            setLoading(false);
+        }
+        else {
+            setPolitics([]);
+            setLoading(false);
+        }
+    }
     const onViewProfile = (p) => {
         setSelectedPolitic(p);
         setOpenModal(true);

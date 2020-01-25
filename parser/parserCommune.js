@@ -63,6 +63,6 @@ const processCommuneFile = () => {
     }
     catch (e)  {
         console.log("Une erreur est survenu", e);
-        //Mongoose.connection.close();
+        Mongoose.connection.close();
     }
 }

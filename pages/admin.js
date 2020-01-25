@@ -10,6 +10,10 @@ const Admin = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [defaultCommunes, setDefaultCommunes] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    //@todo better we to communicate between politics list and submit
+    const [reload, setReload] = useState(false);
+
     const [ selectedCommune, setSelectedCommune] = useState(null);
     const [filters, setFilter] = useState({});
 
@@ -26,11 +30,17 @@ const Admin = () => {
                 ...data
             })
         }).then(function (response) {
-            console.log("Response::", response.json())
-            return response.json();
+            if (response.status === 200) {
+                setReload(true);
+                alert("POST SUCCESS");
+            }
+            else
+                alert("ECHEC DU POSTE")
+            setIsOpen(false);
         })
 
     }
+
     useEffect(() => {
         (async function() {
             setLoading(true);
@@ -47,6 +57,7 @@ const Admin = () => {
     useEffect(() => {
         console.log("SelectedCommune", selectedCommune);
     }, [selectedCommune])
+
     const closeModal = () => setIsOpen(false);
     const openModal = () => setIsOpen(true);
 
@@ -55,6 +66,7 @@ const Admin = () => {
         const updatedCommunes =  defaultCommunes.filter((c) => c.nom.match(reg))
         setCommunes(updatedCommunes);
     }
+
     const onChangeInput = async (e) => {
         const res = await fetch(`commune/search?search=${e.target.value}`);
         try {
@@ -101,7 +113,7 @@ const Admin = () => {
             </div>
             <div className={"content"}>
                 {selectedCommune &&
-                    <DisplayPolitics codeCommune={selectedCommune.codeCommune}/>
+                    <DisplayPolitics codeCommune={selectedCommune.codeCommune} reload={reload} setReload={setReload}/>
                 }
             </div>
         </div>
