@@ -4,6 +4,7 @@ import fetch from 'isomorphic-unfetch'
 import '../assets/sass/global.sass'
 import CreateModal from '../components/CreateModal'
 import DisplayPolitics from '../components/DisplayPolitics/DisplayPolitics'
+import Menu from '../components/Menu/Menu';
 
 const Admin = () => {
     const [communes, setCommunes] = useState([])
@@ -86,7 +87,7 @@ const Admin = () => {
     }
     return (
         <div className={'mainContainer'}>
-
+            <Menu />
             <div className={"commune_container"}>
                 <div className={'main_commune'}>
                     {/*<div className={'filter_container'}>

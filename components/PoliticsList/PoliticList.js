@@ -7,7 +7,7 @@ import {faArrowRight} from '@fortawesome/free-solid-svg-icons'
 
 const PoliticListElement = ({politic, onSelect}) => (
     <li>
-        <div className={"name"}>
+        <div className={`${politic.hiddenLrem ? 'name name-selected' : 'name' }`}>
             {`${politic.nom} ${politic.prenom}`}
         </div>
         <div className={"profil"}>
