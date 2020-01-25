@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import Link from 'next/link'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faArrowLeft} from '@fortawesome/free-solid-svg-icons'
+import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons'
 
 export const Name = ({firstname, lastname}) => {
     return (
@@ -55,9 +55,23 @@ export const ViewPolitic = ({politic}) => {
         <div className={"mainContainer"}>
             {politic &&
             <div className={'container'}>
+                <div className={"card"}>
+                    <div className={'title'}>
+                        <strong>Lien pour partager</strong>
+                    </div>
+                    <div className={'info'}>
+                        <Link href={{pathname:`/fiche?id=${politic._id}`}} as={`/fiche/${politic._id}`}>
+                            <a target="_blank" className={'font-black'}>
+                                Page
+                                <FontAwesomeIcon icon={faArrowRight} className={"icon"}/>
+                            </a>
+                        </Link>
+                    </div>
+                </div>
                 <div className={"file"}>
                     <div className={"information"}>
                         <Name firstname={politic.prenom} lastname={politic.nom}/>
+                        <Card title={"Nombre de voix aux elections"} info={politic.vote}/>
                         <Card title={"Candidat dans la commune de"} info={politic.commune}/>
                         <Card title={"Affilié au mouvement/parti"} info={politic.affiliation}/>
                     </div>

@@ -1,95 +1,132 @@
-import React, {useState, useEffect, Fragment} from 'react'
-import Link  from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import fetch from 'isomorphic-unfetch';
-import getConfig from 'next/config'
-import Head from 'next/head';
-import '../assets/sass/global.sass'
+import React, {useState, useEffect, Fragment} from 'react';
+import fetch from 'isomorphic-unfetch'
 
-const Index = (props) => {
-    const [ lrems, setLrems] = useState([]);
+import '../../../municipales/front/assets/sass/global.sass'
+import CreateModal from '../front/components/CreateModal'
+import DisplayPolitics from '../front/components/DisplayPolitics/DisplayPolitics'
+import Menu from '../front/components/Menu/Menu';
+
+const Index = () => {
+    const [communes, setCommunes] = useState([])
+    const [isOpen, setIsOpen] = useState(false)
+    const [defaultCommunes, setDefaultCommunes] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    //@todo better we to communicate between politics list and submit
+    const [reload, setReload] = useState(false);
+
+    const [ selectedCommune, setSelectedCommune] = useState(null);
+    const [filters, setFilter] = useState({});
+
+    const onSubmit = (data) => {
+        console.log("onSubmit::", data);
+        fetch("lrem", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                // Validation data coming from a form usually
+                ...data,
+                codeCommune: data.commune.code,
+                commune:data.commune.label
+            })
+        }).then(function (response) {
+            if (response.status === 200) {
+                setReload(true);
+                alert("Ajout réussi");
+            }
+            else
+                alert("Echec de l'ajout")
+            setIsOpen(false);
+        })
+
+    }
 
     useEffect(() => {
-        if (props.hasOwnProperty('lrems'))
-            setLrems(props.lrems)
+        (async function() {
+            setLoading(true);
+            const res = await fetch(`commune`);
+            const result = await res.json();
+            if (result.length > 0) {
+                setCommunes(result);
+                setLoading(false);
+                setDefaultCommunes(result);
+            }
+        }())
+    }, [])
 
-    }, [props])
+    const closeModal = () => setIsOpen(false);
+    const openModal = () => setIsOpen(true);
 
+    // client search
+    const search = (e) => {
+        const reg = new RegExp(e.target.value, 'i')
+        const updatedCommunes =  defaultCommunes.filter((c) => c.nom.match(reg))
+        setCommunes(updatedCommunes);
+    }
+
+    // server search
     const onChangeInput = async (e) => {
-        const res = await fetch(`lrem/search?search=${e.target.value}`);
+        const res = await fetch(`commune/search?search=${e.target.value}`);
         try {
             const result = await res.json();
             if (result.length > 0) {
-                setLrems(result);
+                setCommunes(result);
+            }
+            else {
+                setCommunes([])
             }
         }
         catch (e) {
             console.error(e);
         }
     }
-
     return (
-        <Fragment>
-            <Head>
-                <title>Lrem</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <meta charSet="utf-8" />
-            </Head>
-
-        <div className={'container'}>
-            <div className={'header'}>
-                <h1>Qui se cache derrière vos candidats ?</h1>
-                <div className={'header-content'}>
-                    Rentrez son nom, son prénom et voyez le parcours de vos candidats pour les municipales !
+        <div className={'mainContainer'}>
+            <Menu />
+            <div className={"commune_container"}>
+                <div className={'main_commune'}>
+                    {/*<div className={'filter_container'}>
+                    <div>Toutes les communes</div>
+                    <div>- de 9000 habitants</div>
+                </div>*/}
+                    <div className={'header header_commune'}>
+                        <h1>Rechercher par commune ?</h1>
+                    </div>
+                <div className={'content'}>
+                    <input placeholder={"Nom"} onChange={(e) => search(e)}/>
+                    <div className={"commune_list"}>
+                        {!loading ?
+                            <Fragment>
+                        <div className={"size-md mt-md mb-md"}><strong>Résultat de recherche : {communes.length}</strong></div>
+                        <ul>
+                            {communes.slice(0, 30).map((commune, idx) => (
+                                <li className={"communeElement"} onClick={() => setSelectedCommune(commune)}>{commune.nom}</li>
+                            ))}
+                        </ul>
+                            </Fragment>  : <div>Chargement...</div>
+                            }
+                    </div>
                 </div>
-            </div>
-            <div className={'content'}>
-                <input placeholder={"Nom"} onChange={(e) => onChangeInput(e)}/>
-                <div className={"lrem-list"}>
-                    <div className={"size-md mt-md mb-md"}><strong>Résultat de recherche</strong></div>
-                    <ul>
-                        {lrems.map((lrem, idx) => (
-                            <ListElement key={idx} lrem={lrem}/>
-                        ))}
-                    </ul>
+                <CreateModal toggle={closeModal} isOpen={isOpen} onSubmit={onSubmit} communes={communes.slice(0, 30).map((c) => ({label:c.nom, code:c.codeCommune, value:c._id}))}/>
+                </div>
+                <div className={"content"}>
+                    <div>
+                        {defaultCommunes.length > 0 &&
+                        <div className={"candidat_create_btn"} onClick={openModal}>
+                            + Créer un candidat
+                        </div>
+                        }
+                    </div>
+                    {selectedCommune &&
+                        <DisplayPolitics codeCommune={selectedCommune.codeCommune} reload={reload} setReload={setReload}/>
+                    }
                 </div>
             </div>
         </div>
-        </Fragment>
     )
-};
-
-const ListElement = ({lrem}) => (
-    <li>
-        <div className={"name"}>
-            {`${lrem.nom} ${lrem.prenom}`}
-        </div>
-        <div className={"profil"}>
-            <Link href={{pathname:"/fiche", query: {id:lrem._id}}}>
-                <a className={'font-black'}>
-                  Voir son profil
-                  <FontAwesomeIcon icon={faArrowRight} className={"icon"}/>
-                </a>
-            </Link>
-        </div>
-    </li>
-)
-
-Index.getInitialProps = async () => {
-    const {publicRuntimeConfig} = getConfig()
-    try {
-        const res = await fetch(`${publicRuntimeConfig.API_URL}/lrem`);
-        const data = await res.json();
-        return {
-            lrems: data
-        };
-    } catch (e) {
-        return {
-            lrems:[]
-        }
-    }
-
-};
+}
 
 export default Index;

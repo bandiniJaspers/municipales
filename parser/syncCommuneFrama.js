@@ -3,6 +3,7 @@ const Mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 
+//recupère les code region et codeCommune du fichier excelle de l'INSEE et l'ajoute dans un second excell.
 (async function() {
     await processCommuneFile();
 }())

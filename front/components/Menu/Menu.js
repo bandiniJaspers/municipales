@@ -5,14 +5,14 @@ const Menu = () => {
     return (
         <ul className={"menu"}>
             <li>
-                <Link href={{pathname:"/admin"}}>
+                <Link href={{pathname:"/"}}>
                     <a className={'font-black'}>
                         Recherche par commune
                     </a>
                 </Link>
             </li>
             <li>
-                <Link href={{pathname:"/"}}>
+                <Link href={{pathname:"/candidat"}}>
                     <a className={'font-black'}>
                         Recherche par candidat
                     </a>

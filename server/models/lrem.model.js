@@ -5,6 +5,7 @@ module.exports = mongoose.model("lrem", {
     prenom: {required: true, type:String},
     commune: String | null,
     hiddenLrem:Boolean | null,
+    vote: Number,
     sources: [String] | null,
     affiliation: String | null,
     codeCommune: String | null

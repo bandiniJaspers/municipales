@@ -2,7 +2,7 @@ import React, { useEffect, useState, Fragment} from 'react';
 import fetch from 'isomorphic-unfetch'
 import PoliticListElement from '../PoliticsList/PoliticList'
 import { Modal, ModalBody, ModalHeader} from 'reactstrap';
-import {ViewPolitic} from './Name'
+import {ViewPolitic} from './ViewPolitic'
 
 const ModalPolitic = ({isOpen, close, politic}) => {
     return (

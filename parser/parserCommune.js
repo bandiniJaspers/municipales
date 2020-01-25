@@ -1,3 +1,5 @@
+//open France commune data from INSEE and add it to bdd
+
 const XLSX = require('xlsx');
 const Mongoose = require("mongoose");
 const dotenv = require("dotenv");

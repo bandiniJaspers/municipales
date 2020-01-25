@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "all": "node -r dotenv/config ./parser/parser.js && node -r dotenv/config ./parser/parserCommune.js && next build && node -r dotenv/config ./server/server.js",
+    "all": "node -r dotenv/config parser/oldparserYAML.js && node -r dotenv/config ./parser/parserCommune.js && next build && node -r dotenv/config ./server/server.js",
     "start": "node -r dotenv/config ./server/server.js",
-    "build": "next build",
-    "parse": "node -r dotenv/config ./parser/parser.js",
-    "next": "next start",
+    "build": "next build ./front",
+    "parse": "node -r dotenv/config parser/oldparserYAML.js",
+    "next": "next start ./front",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

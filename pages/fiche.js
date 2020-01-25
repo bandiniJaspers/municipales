@@ -2,9 +2,8 @@ import React, {useState, useEffect, Fragment} from 'react';
 import Link  from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import getConfig from 'next/config'
 import fetch from 'isomorphic-unfetch'
-
+import '../../../municipales/front/assets/sass/global.sass'
 const Name = ({firstname, lastname}) => {
     return (
         <Fragment>
@@ -58,6 +57,17 @@ const Fiche = (props) => {
         setFiche(props.fiche)
     }, [props.fiche]);
 
+    useEffect(() => {
+        console.log("Props::", props);
+        (async function() {
+
+            const res = await fetch(`/lrem/${props.id}`);
+            const data = await res.json();
+           if (data)
+               setFiche(data);
+        }())
+    }, [props.id])
+
     return (
         <div className={"mainContainer"}>
             {fiche &&
@@ -71,6 +81,7 @@ const Fiche = (props) => {
                                 </a>
                             </Link>
                             <Name firstname={fiche.prenom} lastname={fiche.nom}/>
+                            <Card title={"Nombre de voix aux elections"} info={fiche.vote}/>
                             <Card title={"Candidat dans la commune de"} info={fiche.commune}/>
                             <Card title={"Affilié au mouvement/parti"} info={fiche.affiliation}/>
                         </div>
@@ -86,13 +97,11 @@ const Fiche = (props) => {
 }
 
 Fiche.getInitialProps = async ({query}) => {
-    const {publicRuntimeConfig} = getConfig()
     const { id } = query;
+    console.log("ID::", id);
     try {
-        const res = await fetch(`/lrem/${id}`);
-        const data = await res.json();
         return {
-            fiche: data
+            id:id
         };
     } catch (e) {
         return {

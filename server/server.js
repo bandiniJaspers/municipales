@@ -29,22 +29,10 @@ const mongoDB = 'lremoupas';
     server.route(routes.concat(
         {
             method: "GET",
-            path:"/{p*}",
-            handler: defaultHandlerWrapper(app)
-        },
-        {
-            method: 'GET',
-            path: '/_next/{p*}' /* next specific routes */,
-            handler: nextHandlerWrapper(app),
-        },
-        {
-            method: "GET",
             path: "/fiche/{id}",
             // This method get the request from the client and return
             // the result of the fiche.js file
-            handler: async (request, h) => {
-                return pathWrapper(app, "/fiche")
-            }
+            handler: pathWrapper(app, "/fiche")
         },
         /*{
             method: "GET",
@@ -64,6 +52,16 @@ const mongoDB = 'lremoupas';
                     index: true,
                 }
             }
+        },
+        {
+            method: "GET",
+            path:"/{p*}",
+            handler: defaultHandlerWrapper(app)
+        },
+        {
+            method: 'GET',
+            path: '/_next/{p*}' /* next specific routes */,
+            handler: nextHandlerWrapper(app),
         }
     ));
 

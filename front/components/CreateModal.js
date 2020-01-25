@@ -43,7 +43,6 @@ Je ne sais pas
           utils.changeValue(state, "commune", () => _args[0])
         },
         setCodeCommune: (_args, state, utils) => {
-            console.log("mutators::State::", state);
             utils.changeValue(state, "codeCommune", () => _args[0])
         }
     }

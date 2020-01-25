@@ -20,6 +20,8 @@ module.exports = [
         handler: async (request, h) => {
             try {
                 const id = request.params.id;
+                if (!id)
+                    return h.response(error).code(500)
                 const fiche = await PoliticModel.findById(id).exec();
 
                 return h.response(fiche);
