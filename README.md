@@ -1,11 +1,8 @@
 Pour lancer le projet sans docker :
 
-npm run parse  (Charge les donnée du yaml dans mongo)
+npm run bdd_script (charge les données)
 
-npm run build 
-
-npm run start
-
+sudo npm run all (obligé en sudo sur mon pc, par rapport a mon installation de .next)
 
 Lancer le projet avec docker :
 
@@ -13,9 +10,7 @@ docker-compose build && docker-compose up
 
 Application accessible : localhost:3000
 
-CSS :
-
-Pour le moment css-in-js, je n'en suis pas fan mais préconisé par next.js.
+Dans le dossier parser existe plusieurs script pour remplir la bdd via les fichiers excell.
 
 
 
