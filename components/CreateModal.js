@@ -51,7 +51,7 @@ Je ne sais pas
 
 
     return (
-        <Modal isOpen={isOpen} toggle={toggle}>
+        <Modal isOpen={isOpen} toggle={toggle} className={"create_modal_container"}>
             <ModalHeader toggle={toggle}>Creer un candidat</ModalHeader>
             <ModalBody>
                 <Form
@@ -63,22 +63,22 @@ Je ne sais pas
                             <form onSubmit={handleSubmit}>
                                 <Field name={"nom"}>
                                     {props => {
-                                        return <TextInput {...props} label={"Nom"} placeholder={"Nom"} />
+                                        return <TextInput {...props} label={""} placeholder={"Nom"} />
                                     }}
                                 </Field>
                                 <Field name={"prenom"}>
                                     {props => {
-                                        return <TextInput {...props} label={"Prenom"} placeholder={"Prenom"} />
+                                        return <TextInput {...props} label={""} placeholder={"Prenom"} />
                                     }}
                                 </Field>
                                 <Field name={"affiliation"}>
                                     {props => {
-                                        return <TextInput {...props} label={"Parti politique"} placeholder={"Parti politique"} />
+                                        return <TextInput {...props} label={""} placeholder={"Parti politique"} />
                                     }}
                                 </Field>
                                 <Field name={"hiddenLrem"} type={"checkbox"}>
                                     {props => {
-                                        return <FieldCheckbox {...props} label={"Cache son appartenance a LREM"} name={"hiddenLrem"} />
+                                        return <FieldCheckbox {...props} className={'create-politic-checkbox'} label={"Cache son appartenance a LREM"} name={"hiddenLrem"} />
                                     }}
                                 </Field>
                                 {values.hiddenLrem &&
@@ -86,7 +86,7 @@ Je ne sais pas
                                 }
                                 <Field name={"commune"}>
                                     {props => {
-                                        return <FieldAsyncSelect {...props} onChange={(value) => {mutators.setCommune(value); mutators.setCodeCommune(value.code);}} label={"commune"} placeholder={"Commune"} />
+                                        return <FieldAsyncSelect {...props} className={'create-select'} onChange={(value) => {mutators.setCommune(value); mutators.setCodeCommune(value.code);}} label={"commune"} placeholder={"Commune"} />
                                     }}
                                 </Field>
                                 <div className={'form-btn'}>

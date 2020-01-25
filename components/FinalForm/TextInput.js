@@ -53,8 +53,8 @@ export const FieldAsyncSelect = ({input, label, meta: { touched, error}, options
                 defaultOptions={true}
                 loadOptions={(selectValue) => asyncLoad(selectValue)}
                 placeholder={placeholder}
-                classNamePrefix=""
-                className="badge badge-select text-center"
+                classNamePrefix="create-politic"
+                className="content"
             />
             {touched && error && (
                 <span className="form__form-group-error formError">{error}</span>

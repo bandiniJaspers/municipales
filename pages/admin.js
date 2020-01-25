@@ -19,7 +19,6 @@ const Admin = () => {
     const [filters, setFilter] = useState({});
 
     const onSubmit = (data) => {
-        console.log("Submit::", data);
         fetch("lrem", {
             method: 'POST',
             headers: {
@@ -130,23 +129,5 @@ const Admin = () => {
         </div>
     )
 }
-
-/*Admin.getInitialProps = async () => {
-    const {publicRuntimeConfig} = getConfig()
-    console.log("publicRunTimeConfig::", publicRuntimeConfig);
-    try {
-        const res = await fetch(`${publicRuntimeConfig.API_URL}/commune`);
-        const data = await res.json();
-        console.log("Admixn::", data);
-        return {
-            communes: data
-        };
-    } catch (e) {
-        return {
-            communes:[]
-        }
-    }
-
-};*/
 
 export default Admin;
