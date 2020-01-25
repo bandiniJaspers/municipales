@@ -2,7 +2,6 @@ import React, { useEffect, useState, Fragment} from 'react';
 import fetch from 'isomorphic-unfetch'
 import PoliticListElement from '../PoliticsList/PoliticList'
 import { Modal, ModalBody, ModalHeader} from 'reactstrap';
-import '../../assets/sass/global.sass'
 import {ViewPolitic} from './Name'
 
 const ModalPolitic = ({isOpen, close, politic}) => {
@@ -51,7 +50,9 @@ const DisplayPolitics = ({codeCommune, reload, setReload}) => {
     return (
         <Fragment>
         <div className={"lrem-list"}>
+            <ul>
             {politics.map((p, idx) => <PoliticListElement key={`politic_${idx}`} onSelect={onViewProfile} politic={p}/>)}
+            </ul>
         </div>
             <ModalPolitic politic={selectedPolitic} isOpen={openModal} close={() => setOpenModal(false)} />
         </Fragment>

@@ -61,12 +61,14 @@ const Admin = () => {
     const closeModal = () => setIsOpen(false);
     const openModal = () => setIsOpen(true);
 
+    // client search
     const search = (e) => {
         const reg = new RegExp(e.target.value, 'i')
         const updatedCommunes =  defaultCommunes.filter((c) => c.nom.match(reg))
         setCommunes(updatedCommunes);
     }
 
+    // server search
     const onChangeInput = async (e) => {
         const res = await fetch(`commune/search?search=${e.target.value}`);
         try {
@@ -74,47 +76,55 @@ const Admin = () => {
             if (result.length > 0) {
                 setCommunes(result);
             }
+            else {
+                setCommunes([])
+            }
         }
         catch (e) {
             console.error(e);
         }
     }
     return (
-        <div className={'commune_container'}>
-            <div className={'main_commune'}>
-                {/*<div className={'filter_container'}>
-                <div>Toutes les communes</div>
-                <div>- de 9000 habitants</div>
-            </div>*/}
-            <div className={'header'}>
-                <h1>Rechercher par commune ?</h1>
-                {defaultCommunes.length > 0 &&
-                    <div onClick={openModal}>
-                        + Créer un candidat
+        <div className={'mainContainer'}>
+
+            <div className={"commune_container"}>
+                <div className={'main_commune'}>
+                    {/*<div className={'filter_container'}>
+                    <div>Toutes les communes</div>
+                    <div>- de 9000 habitants</div>
+                </div>*/}
+                    <div className={'header header_commune'}>
+                        <h1>Rechercher par commune ?</h1>
                     </div>
-                }
-            </div>
-            <div className={'content'}>
-                <input placeholder={"Nom"} onChange={(e) => search(e)}/>
-                <div className={"lrem-list"}>
-                    {!loading ?
-                        <Fragment>
-                    <div className={"size-md mt-md mb-md"}><strong>Résultat de recherche : {communes.length}</strong></div>
-                    <ul>
-                        {communes.slice(0, 30).map((commune, idx) => (
-                            <div className={"communeElement"} onClick={() => setSelectedCommune(commune)}>{commune.nom}</div>
-                        ))}
-                    </ul>
-                        </Fragment>  : <div>Chargement...</div>
-                        }
+                <div className={'content'}>
+                    <input placeholder={"Nom"} onChange={(e) => search(e)}/>
+                    <div className={"commune_list"}>
+                        {!loading ?
+                            <Fragment>
+                        <div className={"size-md mt-md mb-md"}><strong>Résultat de recherche : {communes.length}</strong></div>
+                        <ul>
+                            {communes.slice(0, 30).map((commune, idx) => (
+                                <li className={"communeElement"} onClick={() => setSelectedCommune(commune)}>{commune.nom}</li>
+                            ))}
+                        </ul>
+                            </Fragment>  : <div>Chargement...</div>
+                            }
+                    </div>
                 </div>
-            </div>
-            <CreateModal toggle={closeModal} isOpen={isOpen} onSubmit={onSubmit} communes={communes.slice(0, 30).map((c) => ({label:c.nom, code:c.codeCommune, value:c._id}))}/>
-            </div>
-            <div className={"content"}>
-                {selectedCommune &&
-                    <DisplayPolitics codeCommune={selectedCommune.codeCommune} reload={reload} setReload={setReload}/>
-                }
+                <CreateModal toggle={closeModal} isOpen={isOpen} onSubmit={onSubmit} communes={communes.slice(0, 30).map((c) => ({label:c.nom, code:c.codeCommune, value:c._id}))}/>
+                </div>
+                <div className={"content"}>
+                    <div>
+                        {defaultCommunes.length > 0 &&
+                        <div className={"candidat_create_btn"} onClick={openModal}>
+                            + Créer un candidat
+                        </div>
+                        }
+                    </div>
+                    {selectedCommune &&
+                        <DisplayPolitics codeCommune={selectedCommune.codeCommune} reload={reload} setReload={setReload}/>
+                    }
+                </div>
             </div>
         </div>
     )

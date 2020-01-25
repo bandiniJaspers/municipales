@@ -1,9 +1,9 @@
 import React from 'react';
 import Select from 'react-select'
-
+import AsyncSelect from 'react-select/async';
+import fetch from 'isomorphic-unfetch'
 
 export const FieldCheckbox = ({name, onChange, input, disabled = false, className, label, value}) => {
-    console.log("Checkbox::", value);
     return (
         <div className={className}>
             <input
@@ -35,6 +35,33 @@ export const TextInput = ({disabled = false, label, placeholder, input, classNam
     )
 }
 
+const asyncLoad = async (value) => {
+    const res = await fetch(`commune/search?search=${value}`);
+    const result = await res.json();
+    // on récupère les 10 premiers résultats, pour des raisons de performances.
+    return result.slice(0,10).map((c) => ({label:c.nom, code:c.codeCommune, value:c._id}));
+};
+
+export const FieldAsyncSelect = ({input, label, meta: { touched, error}, options, placeholder, disabled, className, onChange = null}) => {
+    return (
+        <div className={className}>
+            <AsyncSelect
+                {...input}
+                name={label}
+                isDisabled={false}
+                isSearchable={true}
+                defaultOptions={true}
+                loadOptions={(selectValue) => asyncLoad(selectValue)}
+                placeholder={placeholder}
+                classNamePrefix=""
+                className="badge badge-select text-center"
+            />
+            {touched && error && (
+                <span className="form__form-group-error formError">{error}</span>
+            )}
+        </div>
+    )
+}
 export const FieldSelect = ({input, label, meta: { touched, error}, options, placeholder, disabled, className, onChange = null}) => {
     return (
         <div className={className}>

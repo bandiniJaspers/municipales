@@ -2,8 +2,9 @@ import React, {Fragment} from 'react'
 import { Modal, ModalBody, ModalHeader} from 'reactstrap';
 import { Form, Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
-import {FieldCheckbox, FieldSelect, TextInput} from './FinalForm/TextInput'
+import {FieldAsyncSelect, FieldCheckbox, FieldSelect, TextInput} from './FinalForm/TextInput'
 import arrayMutators from 'final-form-arrays'
+import fetch from 'isomorphic-unfetch'
 
 const SourceArray = () => {
     return (
@@ -47,6 +48,8 @@ Je ne sais pas
         }
     }
 
+
+
     return (
         <Modal isOpen={isOpen} toggle={toggle}>
             <ModalHeader toggle={toggle}>Creer un candidat</ModalHeader>
@@ -83,7 +86,7 @@ Je ne sais pas
                                 }
                                 <Field name={"commune"}>
                                     {props => {
-                                        return <FieldSelect {...props} onChange={(value) => {mutators.setCommune(value); mutators.setCodeCommune(value.code);}} label={"commune"} placeholder={"Commune"} options={communes}/>
+                                        return <FieldAsyncSelect {...props} onChange={(value) => {mutators.setCommune(value); mutators.setCodeCommune(value.code);}} label={"commune"} placeholder={"Commune"} />
                                     }}
                                 </Field>
                                 <div className={'form-btn'}>

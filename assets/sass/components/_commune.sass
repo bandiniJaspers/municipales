@@ -2,50 +2,63 @@
 @import '../var/fonts'
 @import '../var/colors'
 
-.communeElement
-  cursor: pointer
-
 .commune_container
   display: flex
   flex-direction: row
   align-items: center
 
-  .test
-    color: red
+  .main_commune
+    width: 50%
 
-  li
-    list-style: none
-    display: flex
-    flex-flow: column nowrap
-    min-height: 50px
-    align-items: stretch
-    margin-bottom: 30px
-    justify-content: center
+.commune_list
+  height: 600px
+  overflow-y: hidden
+  width: 100%
 
+  .size-md
+    font-size: 22px
+    padding-bottom: 10px
+    margin-bottom: 10px
 
-    .profil
+  ul
+    padding-left: 0
+
+    li
+      list-style: none
+      display: flex
+      flex-flow: column nowrap
       min-height: 50px
-      a
-        color: $black
-        text-decoration: none
-        display: flex
-        justify-content: space-around
-        height: 100%
-        align-items: center
-        font-weight: 300
-        font-style: italic
-        transition: all 0.2s
+      align-items: stretch
+      margin-bottom: 20px
+      cursor: pointer
+      justify-content: center
+      text-align: center
+      border: 2px solid $orange
+      border-radius: 20px
 
-        &:hover
-          transform: scale3d(0.9,0.9,0.9)
-
-
-    +media(tablet-landscape)
-      flex-flow: row nowrap
-      .name
-        flex: 6
-      .profil
-        flex: 5
+.lrem-list
+  .profil
+    span
+      color: $black
+      text-decoration: none
+      display: flex
+      justify-content: space-around
+      height: 100%
+      align-items: center
+      font-weight: 300
+      font-style: italic
+      transition: all 0.2s
+      cursor: pointer
+    &:hover
+        transform: scale3d(0.9,0.9,0.9)
 
 .modal_politic
     max-width: 50%
+
+.candidat_create_btn
+  background-color: $orange
+  text-align: center
+  padding: 10px
+  border-radius: 10px
+  margin-bottom: 30px
+  color: white

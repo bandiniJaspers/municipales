@@ -19,13 +19,12 @@ module.exports = [
         handler: async (request, h) => {
             try {
                 let search = request.query.search;
-                console.log("commune search::", search)
                 search = search.toLowerCase().trim();
 
                 let query = {nom: new RegExp(search, 'i')}
-
+                console.log("Query::", query)
                 let commune = await CommuneModel.find(query).exec();
-
+                console.log("Commune::", commune);
                 return h.response(JSON.stringify(commune)).code(200);
             } catch(error) {
                 h.response(error).code(404)
