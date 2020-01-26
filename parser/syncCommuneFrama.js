@@ -15,10 +15,10 @@ const processCommuneFile = async () => {
         const workbookframa = XLSX.readFile(`${__dirname}/onestlatechframa.xlsx`)
         const sheet_name_list = workbook.SheetNames;
         const frama_sheet_name_list = workbookframa.SheetNames;
-        //console.log("sheet_name_list", frama_sheet_name_list);
+
         const xlData = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[4]]);
         const xlDataFrama = XLSX.utils.sheet_to_json(workbookframa.Sheets[frama_sheet_name_list[0]]);
-        //console.log("xlDataFrama::", xlDataFrama);
+
         const lrems = xlDataFrama.map((fd, idx) => {
             const index = xlData.findIndex((d) => d.hasOwnProperty("__EMPTY_5") && d["__EMPTY_5"].toLowerCase() === fd.Commune.toLowerCase());
             if (index > -1)
@@ -33,6 +33,5 @@ const processCommuneFile = async () => {
     }
     catch (e)  {
         console.log("Une erreur est survenu", e);
-        //Mongoose.connection.close();
     }
 }

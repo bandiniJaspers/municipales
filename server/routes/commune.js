@@ -1,4 +1,5 @@
 const CommuneModel = require('../models/commune.model');
+const PoliticModel = require('../models/lrem.model');
 
 module.exports = [
     {
@@ -18,11 +19,21 @@ module.exports = [
         path: "/commune/search",
         handler: async (request, h) => {
             try {
-                let search = request.query.search;
-                search = search.toLowerCase().trim();
-
-                let query = {nom: new RegExp(search, 'i')}
-                let commune = await CommuneModel.find(query).exec();
+                let {search, hiddenLrem} = request.query;
+                console.log("Query::", request.query);
+                let query = {}
+                if (search) {
+                    search = search.toLowerCase().trim();
+                    query = {...query, nom: new RegExp(search, 'i')}
+                }
+                if (hiddenLrem) {
+                    query = {...query, politics: {qty:{$gt:0},hiddenLrem:true}}
+                }
+                const commune = await CommuneModel.find(query).populate('politics').exec();
+                if (commune.length > 0)
+                    console.log("Commune::", commune.length, commune[0]);
+                else
+                    console.log("lookupnotworking")
                 return h.response(JSON.stringify(commune)).code(200);
             } catch(error) {
                 h.response(error).code(404)

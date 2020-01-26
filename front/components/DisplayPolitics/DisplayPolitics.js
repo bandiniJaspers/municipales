@@ -26,7 +26,8 @@ const DisplayPolitics = ({codeCommune, reload, setReload}) => {
     }, [codeCommune])
 
     useEffect(() => {
-        loadPolitics();
+        if (reload)
+            loadPolitics();
     }, [reload])
 
     const loadPolitics = async () => {
@@ -41,6 +42,8 @@ const DisplayPolitics = ({codeCommune, reload, setReload}) => {
             setPolitics([]);
             setLoading(false);
         }
+        if (reload)
+            setReload(false);
     }
     const onViewProfile = (p) => {
         setSelectedPolitic(p);

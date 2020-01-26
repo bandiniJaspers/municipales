@@ -43,18 +43,17 @@ const saveData = async data => {
         popmun:data["__EMPTY_6"],
         poppart:data["__EMPTY_7"],
         poptotal: data["__EMPTY_8"],
+        politics: []
     }
     let newCommune = new CommuneModel(communeModel);
-    //console.log("newCommune::", newCommune);
     return newCommune.save();
 }
 const processCommuneFile = () => {
     try {
         const workbook = XLSX.readFile(`${__dirname}/communepop.xls`);
         const sheet_name_list = workbook.SheetNames;
-        console.log("sheet_name_list", sheet_name_list);
+
         const xlData = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[4]]);
-        //console.log("xlData::", xlData);
         resolveData(xlData).then(() => {
             console.log("Les informations ont bien été enregistré en bdd")
             Mongoose.connection.close();

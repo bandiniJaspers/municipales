@@ -6,28 +6,12 @@ import fetch from 'isomorphic-unfetch';
 import getConfig from 'next/config'
 import Head from 'next/head';
 import '../front/assets/sass/global.sass'
+import Filters from '../front/components/Filters/Filters'
+import {fetchData} from '../front/utils/fetch'
+import {useFetch} from '../front/components/FetchHook/useFetch'
 
 const Candidat = (props) => {
-    const [ lrems, setLrems] = useState([]);
-
-    useEffect(() => {
-        if (props.hasOwnProperty('lrems'))
-            setLrems(props.lrems)
-
-    }, [props])
-
-    const onChangeInput = async (e) => {
-        const res = await fetch(`lrem/search?search=${e.target.value}`);
-        try {
-            const result = await res.json();
-            if (result.length > 0) {
-                setLrems(result);
-            }
-        }
-        catch (e) {
-            console.error(e);
-        }
-    }
+    const { data, updateFilters, setSearchValue} = useFetch('lrem/search');
 
     return (
         <Fragment>
@@ -40,16 +24,17 @@ const Candidat = (props) => {
         <div className={'container'}>
             <div className={'header'}>
                 <h1>Qui se cache derrière vos candidats ?</h1>
+                <Filters onSubmit={updateFilters} filters={["hiddenLrem", "parti"]} />
                 <div className={'header-content'}>
                     Rentrez son nom, son prénom et voyez le parcours de vos candidats pour les municipales !
                 </div>
             </div>
             <div className={'content'}>
-                <input placeholder={"Nom"} onChange={(e) => onChangeInput(e)}/>
+                <input placeholder={"Nom"} onChange={(e) => setSearchValue(e)}/>
                 <div className={"lrem-list"}>
                     <div className={"size-md mt-md mb-md"}><strong>Résultat de recherche</strong></div>
                     <ul>
-                        {lrems.map((lrem, idx) => (
+                        {data && data.map((lrem, idx) => (
                             <ListElement key={idx} lrem={lrem}/>
                         ))}
                     </ul>
@@ -62,11 +47,11 @@ const Candidat = (props) => {
 
 const ListElement = ({lrem}) => (
     <li>
-        <div className={"name"}>
+        <div className={`${lrem.hiddenLrem ? 'name name-selected' : 'name' }`}>
             {`${lrem.nom} ${lrem.prenom}`}
         </div>
         <div className={"profil"}>
-            <Link href={{pathname:"/fiche", query: {id:lrem._id}}}>
+            <Link href={{pathname:"/fiche", query: {id:lrem._id, previous: "candidat"}}}>
                 <a className={'font-black'}>
                   Voir son profil
                   <FontAwesomeIcon icon={faArrowRight} className={"icon"}/>

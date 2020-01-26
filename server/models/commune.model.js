@@ -8,6 +8,7 @@ const CommuneSchema = new Schema({
     popmun:Number | String,
     poppart:Number | String,
     poptotal: Number | String,
+    politics: [{ type: Schema.Types.ObjectId, ref: 'Lrem' }],
 })
 
 module.exports = mongoose.model('Commune', CommuneSchema);

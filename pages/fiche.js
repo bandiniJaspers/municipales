@@ -74,7 +74,7 @@ const Fiche = (props) => {
                 <div className={'container'}>
                     <div className={"file"}>
                         <div className={"information"}>
-                            <Link href={{pathname:"/"}}>
+                            <Link href={{pathname:`/${props.previous ? props.previous : ''}`}}>
                                 <a className={'font-black'}>
                                   <FontAwesomeIcon icon={faArrowLeft} className={"icon"}/>
                                   Retourner à l'accueil
@@ -97,15 +97,17 @@ const Fiche = (props) => {
 }
 
 Fiche.getInitialProps = async ({query}) => {
-    const { id } = query;
+    const { id, previous } = query;
     console.log("ID::", id);
     try {
         return {
-            id:id
+            id:id,
+            previous: previous
         };
     } catch (e) {
         return {
-            fiche:null
+            fiche:null,
+            previous:null
         }
     }
 };

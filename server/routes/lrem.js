@@ -50,13 +50,18 @@ module.exports = [
         path: "/lrem/search",
         handler: async (request, h) => {
             try {
-                let search = request.query.search;
-                search = search.toLowerCase().trim();
+                let {search, hiddenLrem} = request.query;
 
-                let query = {nom: new RegExp(search, 'i')}
+                let query = {}
+                if (search) {
+                    search = search.toLowerCase().trim();
+                    query = {...query, nom: new RegExp(search, 'i')}
+                }
+                if (hiddenLrem) {
+                    query = {...query, hiddenLrem: hiddenLrem === 'true'}
+                }
 
                 let lrem = await PoliticModel.find(query).exec();
-
                 return h.response(JSON.stringify(lrem)).code(200);
             } catch(error) {
                 h.response(error).code(404)

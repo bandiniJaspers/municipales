@@ -5,21 +5,21 @@ import '../front/assets/sass/global.sass'
 import CreateModal from '../front/components/CreateModal'
 import DisplayPolitics from '../front/components/DisplayPolitics/DisplayPolitics'
 import Menu from '../front/components/Menu/Menu';
+import Filters from '../front/components/Filters/Filters'
+import {useFetch} from '../front/components/FetchHook/useFetch'
 
 const Index = () => {
     const [communes, setCommunes] = useState([])
     const [isOpen, setIsOpen] = useState(false)
     const [defaultCommunes, setDefaultCommunes] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const { data, updateFilters, loading, searchFilter, filters, setFilters, setSearchFilter, load, setSearchValue} = useFetch('commune/search');
 
     //@todo better we to communicate between politics list and submit
     const [reload, setReload] = useState(false);
 
     const [ selectedCommune, setSelectedCommune] = useState(null);
-    const [filters, setFilter] = useState({});
 
     const onSubmit = (data) => {
-        console.log("onSubmit::", data);
         fetch("lrem", {
             method: 'POST',
             headers: {
@@ -44,44 +44,19 @@ const Index = () => {
 
     }
 
-    useEffect(() => {
-        (async function() {
-            setLoading(true);
-            const res = await fetch(`commune`);
-            const result = await res.json();
-            if (result.length > 0) {
-                setCommunes(result);
-                setLoading(false);
-                setDefaultCommunes(result);
-            }
-        }())
-    }, [])
-
     const closeModal = () => setIsOpen(false);
     const openModal = () => setIsOpen(true);
 
-    // client search
-    const search = (e) => {
-        const reg = new RegExp(e.target.value, 'i')
-        const updatedCommunes =  defaultCommunes.filter((c) => c.nom.match(reg))
-        setCommunes(updatedCommunes);
-    }
-
-    // server search
-    const onChangeInput = async (e) => {
-        const res = await fetch(`commune/search?search=${e.target.value}`);
-        try {
-            const result = await res.json();
-            if (result.length > 0) {
-                setCommunes(result);
-            }
-            else {
-                setCommunes([])
-            }
-        }
-        catch (e) {
-            console.error(e);
-        }
+    const getList = () => {
+        if (!data)
+            return
+        let updatedData = [...data];
+        updatedData = filters.length > 0 ? updatedData : updatedData.slice(0, 30);
+        return updatedData.map(
+            (commune, idx) => (
+                <li key={`commune_list_${idx}`} className={"communeElement"} onClick={() => setSelectedCommune(commune)}>{commune.nom}</li>
+            )
+        )
     }
     return (
         <div className={'mainContainer'}>
@@ -94,17 +69,16 @@ const Index = () => {
                 </div>*/}
                     <div className={'header header_commune'}>
                         <h1>Rechercher par commune ?</h1>
+                        <Filters onSubmit={updateFilters} filters={["hiddenLrem", "parti"]} />
                     </div>
                 <div className={'content'}>
-                    <input placeholder={"Nom"} onChange={(e) => search(e)}/>
+                    <input placeholder={"Nom"} onChange={(e) => setSearchValue(e)}/>
                     <div className={"commune_list"}>
                         {!loading ?
                             <Fragment>
-                        <div className={"size-md mt-md mb-md"}><strong>Résultat de recherche : {communes.length}</strong></div>
+                        <div className={"size-md mt-md mb-md"}><strong>Résultat de recherche : {data ? data.length : 0}</strong></div>
                         <ul>
-                            {communes.slice(0, 30).map((commune, idx) => (
-                                <li className={"communeElement"} onClick={() => setSelectedCommune(commune)}>{commune.nom}</li>
-                            ))}
+                            {data && getList()}
                         </ul>
                             </Fragment>  : <div>Chargement...</div>
                             }
@@ -114,7 +88,7 @@ const Index = () => {
                 </div>
                 <div className={"content"}>
                     <div>
-                        {defaultCommunes.length > 0 &&
+                        {data && data.length > 0 &&
                         <div className={"candidat_create_btn"} onClick={openModal}>
                             + Créer un candidat
                         </div>
