@@ -1,5 +1,7 @@
+
 Pour lancer le projet sans docker :
 
+Renommer le .env.dist en .env
 npm run bdd_script (charge les données)
 
 sudo npm run all (obligé en sudo sur mon pc, par rapport a mon installation de .next)
