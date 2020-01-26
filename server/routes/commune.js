@@ -20,22 +20,22 @@ module.exports = [
         handler: async (request, h) => {
             try {
                 let {search, hiddenLrem} = request.query;
-                console.log("Query::", request.query);
-                let populate = {path: 'lrems', match:{hiddenLrem:true}}
-                let query = {}
+
+                let query = {};
+
                 if (search) {
                     search = search.toLowerCase().trim();
                     query = {...query, nom: new RegExp(search, 'i')}
                 }
+
                 if (hiddenLrem) {
-                   populate = {...populate, match:{hiddenLrem:true}}
+                    query = {...query, "politics.0": {$exists:true}}
                 }
-                const commune = await CommuneModel.find(query).populate(populate).exec();
-                if (commune.length > 0)
-                    console.log("Commune::", commune.length, commune[0]);
-                else
-                    console.log("lookupnotworking")
-                return h.response(JSON.stringify(commune)).code(200);
+
+                let communes = await CommuneModel.find(query).populate('politics').exec();
+                if (hiddenLrem)
+                    communes = communes.filter((c) => c.politics.findIndex((p) => p.hiddenLrem === true) > -1);
+                return h.response(JSON.stringify(communes)).code(200);
             } catch(error) {
                 h.response(error).code(404)
             }
