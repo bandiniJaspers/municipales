@@ -21,15 +21,16 @@ module.exports = [
             try {
                 let {search, hiddenLrem} = request.query;
                 console.log("Query::", request.query);
+                let populate = {path: 'lrems', match:{hiddenLrem:true}}
                 let query = {}
                 if (search) {
                     search = search.toLowerCase().trim();
                     query = {...query, nom: new RegExp(search, 'i')}
                 }
                 if (hiddenLrem) {
-                    query = {...query, politics: {qty:{$gt:0},hiddenLrem:true}}
+                   populate = {...populate, match:{hiddenLrem:true}}
                 }
-                const commune = await CommuneModel.find(query).populate('politics').exec();
+                const commune = await CommuneModel.find(query).populate(populate).exec();
                 if (commune.length > 0)
                     console.log("Commune::", commune.length, commune[0]);
                 else

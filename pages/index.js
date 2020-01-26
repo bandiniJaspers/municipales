@@ -48,11 +48,12 @@ const Index = () => {
     const openModal = () => setIsOpen(true);
 
     const getList = () => {
+        console.log("getList:")
         if (!data)
             return
         let updatedData = [...data];
         updatedData = filters.length > 0 ? updatedData : updatedData.slice(0, 30);
-        return updatedData.map(
+        return updatedData.slice(0, 100).map(
             (commune, idx) => (
                 <li key={`commune_list_${idx}`} className={"communeElement"} onClick={() => setSelectedCommune(commune)}>{commune.nom}</li>
             )
@@ -84,7 +85,7 @@ const Index = () => {
                             }
                     </div>
                 </div>
-                <CreateModal toggle={closeModal} isOpen={isOpen} onSubmit={onSubmit} communes={communes.slice(0, 30).map((c) => ({label:c.nom, code:c.codeCommune, value:c._id}))}/>
+                <CreateModal toggle={closeModal} isOpen={isOpen} onSubmit={onSubmit} communes={data ? data.slice(0, 30).map((c) => ({label:c.nom, code:c.codeCommune, value:c._id})) : []}/>
                 </div>
                 <div className={"content"}>
                     <div>
