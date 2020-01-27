@@ -96,7 +96,7 @@ const addPoliticFromFrama = async () => {
                 return {
                     ...xlDataFrama[idx],
                     vote: 0,
-                    commune: xlData[index]["__EMPTY_5"],
+                    commune: xlData[index]["__EMPTY_5"].replace(/\s/g,''),
                     codeCommune: xlData[index]["__EMPTY_1"] + xlData[index]["__EMPTY_4"]
                 }
             }

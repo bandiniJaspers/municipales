@@ -2,7 +2,7 @@ import { useEffect, useState} from 'react'
 import {fetchData} from '../../utils/fetch'
 
 
-export const useFetch = (endpoint) => {
+export const useFetch = (endpoint, filter = []) => {
     const [filters, setFilters] = useState([]);
     const [searchFilter, setSearchFilter] = useState('');
     const [data, setData] = useState(null);
