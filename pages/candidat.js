@@ -15,7 +15,11 @@ const Candidat = (props) => {
 
     return (
         <Fragment>
-
+            <Head>
+                <title>Lrem</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta charSet="utf-8" />
+            </Head>
 
         <div className={'container'}>
             <div className={'header'}>
