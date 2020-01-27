@@ -1,4 +1,5 @@
 const PoliticModel = require('../models/lrem.model');
+const CommuneModel = require('../models/commune.model');
 
 module.exports = [
     {
@@ -74,7 +75,9 @@ module.exports = [
         handler: async (request, h) => {
             try {
                 const newPolitic = new PoliticModel({...request.payload})
-                const req = await newPolitic.save();
+                const req = await newPolitic.save().then((res) => {
+                    CommuneModel.findOneAndUpdate({codeCommune: res.codeCommune}, {$push: {politics: res._id}}).exec();
+                });
                 return h.response(req).code(200);
             } catch(error) {
                 h.response(error).code(404)
