@@ -9,9 +9,7 @@ import Filters from '../front/components/Filters/Filters'
 import {useFetch} from '../front/components/FetchHook/useFetch'
 
 const Index = () => {
-    const [communes, setCommunes] = useState([])
     const [isOpen, setIsOpen] = useState(false)
-    const [defaultCommunes, setDefaultCommunes] = useState([]);
     const { data, updateFilters, loading, searchFilter, filters, setFilters, setSearchFilter, load, setSearchValue} = useFetch('commune/search');
 
     //@todo better we to communicate between politics list and submit
@@ -48,7 +46,6 @@ const Index = () => {
     const openModal = () => setIsOpen(true);
 
     const getList = () => {
-        console.log("getList:")
         if (!data)
             return
         let updatedData = [...data];
@@ -70,14 +67,14 @@ const Index = () => {
                 </div>*/}
                     <div className={'header header_commune'}>
                         <h1>Rechercher par commune ?</h1>
-                        <Filters onSubmit={updateFilters} filters={["hiddenLrem", "parti"]} />
+                        <Filters onSubmit={updateFilters} filters={[{id:"hiddenLrem", label:"Communes contenant LREMs se prétendants sans étiquette"}]} />
                     </div>
                 <div className={'content'}>
                     <input placeholder={"Nom"} onChange={(e) => setSearchValue(e)}/>
                     <div className={"commune_list"}>
                         {!loading ?
                             <Fragment>
-                        <div className={"size-md mt-md mb-md"}><strong>Résultat de recherche : {data ? data.length : 0}</strong></div>
+                        <div className={"size-md mt-md mb-md"}><strong>Résultat de recherche : {data ? data.length : 0}</strong><span>Seul les 100 premières communes sont affichées</span></div>
                         <ul>
                             {data && getList()}
                         </ul>

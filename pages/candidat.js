@@ -24,7 +24,7 @@ const Candidat = (props) => {
         <div className={'container'}>
             <div className={'header'}>
                 <h1>Qui se cache derrière vos candidats ?</h1>
-                <Filters onSubmit={updateFilters} filters={["hiddenLrem", "parti"]} />
+                <Filters onSubmit={updateFilters} filters={[{id:"hiddenLrem", label:"Candidat(e)s LREMS se prétendants sans étiquette"}]} />
                 <div className={'header-content'}>
                     Rentrez son nom, son prénom et voyez le parcours de vos candidats pour les municipales !
                 </div>

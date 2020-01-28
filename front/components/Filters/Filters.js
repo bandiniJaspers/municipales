@@ -11,34 +11,34 @@ const Filters = ({filters, onSubmit}) => {
         }}
     </Field>
 
-    const getHiddenLremField = (idx) =>  <Field name={"hiddenLrem"} type={"checkbox"}>
+    const getHiddenLremField = (idx, label) =>  <Field name={"hiddenLrem"} type={"checkbox"}>
         {props => {
-            return <FieldCheckbox key={`filter_field_${idx}`} {...props} className={'create-politic-checkbox'} label={"Cache son appartenance a LREM"} name={"hiddenLrem"} />
+            return <FieldCheckbox key={`filter_field_${idx}`} {...props} className={'search_filter_hiddenLrem'} label={label} name={"hiddenLrem"} />
         }}
     </Field>
 
     return (
-        <Fragment>
+        <div className={'main_search_filters'}>
             <Form
                 onSubmit={onSubmit}
                 render={({handleSubmit, values}) => {
                     return (
                         <form onSubmit={handleSubmit}>
                             {filters.map((f, idx) => {
-                                if (f === "hiddenLrem")
-                                    return getHiddenLremField(idx)
-                                if (f === "parti")
+                                if (f.id === "hiddenLrem")
+                                    return getHiddenLremField(idx, f.label)
+                                if (f.id === "parti")
                                     return getPartiField(idx)
                             })}
-                            <div className={'form-btn'}>
-                                <button type={"submit"}>Enregistrer</button>
+                            <div className={'search_filters_submit'}>
+                                <button type={"submit"}>Rechercher</button>
                             </div>
                         </form>
                     )
                 }}
             />
 
-        </Fragment>
+        </div>
     )
 }
 
