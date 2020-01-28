@@ -22,7 +22,7 @@ const server = new Hapi.Server({
 
 const mongoDB = 'lremoupas';
 (async () => {
-    const mongoClient = await Mongoose.connect(`${process.env.MONGO_URL}:${process.env.MONGO_PORT}/${mongoDB}`);
+    const mongoClient = await Mongoose.connect(`${process.env.MONGO_URL}:${process.env.MONGO_PORT}/${mongoDB}`, { useNewUrlParser: true });
     //server.app.mongoClient = mongoClient.db(mongoDB)
     await server.register(Inert);
 

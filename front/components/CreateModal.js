@@ -57,7 +57,6 @@ Je ne sais pas
                     onSubmit={onSubmit}
                     mutators={{...mutators, ...arrayMutators}}
                     render={({handleSubmit, values, form:{mutators}}) => {
-                        console.log("Values::", values);
                         return (
                             <form onSubmit={handleSubmit}>
                                 <Field name={"nom"} validate={required}>

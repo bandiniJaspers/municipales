@@ -8,6 +8,8 @@ const CommuneSchema = new Schema({
     popmun:Number | String,
     poppart:Number | String,
     poptotal: Number | String,
+    latitude: String,
+    longitude: String,
     politics: [{ type: Schema.Types.ObjectId, ref: 'Lrem' }],
 })
 

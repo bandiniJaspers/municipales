@@ -58,7 +58,6 @@ const Fiche = (props) => {
     }, [props.fiche]);
 
     useEffect(() => {
-        console.log("Props::", props);
         (async function() {
 
             const res = await fetch(`/lrem/${props.id}`);

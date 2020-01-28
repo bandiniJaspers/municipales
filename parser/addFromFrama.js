@@ -9,7 +9,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 
-Mongoose.connect(`${process.env.MONGO_URL}:${process.env.MONGO_PORT}/lremoupas`);
+Mongoose.connect(`${process.env.MONGO_URL}:${process.env.MONGO_PORT}/lremoupas`, { useNewUrlParser: true });
 const connection = Mongoose.connection;
 
 const PoliticModel = require('../server/models/lrem.model');
@@ -96,7 +96,7 @@ const addPoliticFromFrama = async () => {
                 return {
                     ...xlDataFrama[idx],
                     vote: 0,
-                    commune: xlData[index]["__EMPTY_5"],
+                    commune: xlData[index]["__EMPTY_5"].replace(/\s/g,''),
                     codeCommune: xlData[index]["__EMPTY_1"] + xlData[index]["__EMPTY_4"]
                 }
             }

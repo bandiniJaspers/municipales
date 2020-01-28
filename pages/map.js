@@ -15,12 +15,6 @@ const ViewMap = (props) => {
         setIsBrowser(true)
     }, [])
 
-    console.log("Data::", data);
-    /*useEffect(() => {
-        if (!isBrowser)
-            return
-
-    }, [isBrowser])*/
     return (
         <div>
             {isBrowser &&
