@@ -74,7 +74,11 @@ const Index = () => {
                     <div className={"commune_list"}>
                         {!loading ?
                             <Fragment>
-                        <div className={"size-md mt-md mb-md"}><strong>Résultat de recherche : {data ? data.length : 0}</strong><span>Seul les 100 premières communes sont affichées</span></div>
+                        <div className={"size-md mt-md mb-md"}><strong>Résultat de recherche : {data ? data.length : 0}</strong>
+                            {data && data.length > 30 &&
+                            <span><br/>Seul les 30 premières communes sont affichées</span>
+                            }
+                        </div>
                         <ul>
                             {data && getList()}
                         </ul>
