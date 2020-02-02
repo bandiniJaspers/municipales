@@ -2,6 +2,7 @@
 @import '../var/colors'
 
 .create_modal_container
+  max-width: 50%
   .add-source
     display: flex
     justify-content: center
@@ -12,19 +13,32 @@
     display: flex
     justify-content: center
     button
-      cursor: pointer
+      padding: 10px 15px
+      background-color: $black
+      color: $beige
+      width: 50%
       border: none
-      background-color: $orange
-      padding: 20px
+      position: relative
+      cursor: pointer
+      &::after
+        +triangle(65px, $beige, down-right)
+        right: 0
+        top: 0
+
+      &::before
+        +triangle(65px, $beige, up-left)
+        left: 0
+        top: 0
 
   .modal-content
     background-color: $beige
   .create-politic-checkbox
     display: flex
-    flex-direction: row
+    flex-direction: row-reverse
     align-items: center
     color: $black
-
+    label
+      color: $lightgrey
     input
       flex: 1
       margin: 0
@@ -50,7 +64,7 @@
       border-bottom: 5px solid $orange
 
     .create-politic__placeholder
-      color: $black
+      color: $lightgrey
 
     .create-politic__single-value
       color: $black
@@ -66,3 +80,27 @@
         border-bottom: 5px solid $orange
         padding: 10px 0
         margin-bottom: 30px
+
+.modal_politic
+  max-width: 50%
+  .modal-content
+    background-color: $beige
+    .file
+      width: 70%
+    .sources
+      width: 70%
+  .card
+    background-color: $beige
+    border: none
+
+  .card-link
+    display: flex
+    flex-direction: row
+    justify-content: space-evenly
+    margin-bottom: 20px
+
+    a
+      color: black
+      svg
+        margin-left: 5px
+

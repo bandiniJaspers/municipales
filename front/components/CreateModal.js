@@ -29,7 +29,7 @@ const SourceArray = () => {
     )
 }
 
-const CreateModal = ({isOpen, toggle, onSubmit, communes}) => {
+const CreateModal = ({isOpen, toggle, onSubmit}) => {
     /*
     INVESTI
 SOUTENU
@@ -51,14 +51,20 @@ Je ne sais pas
 
     return (
         <Modal isOpen={isOpen} toggle={toggle} className={"create_modal_container"}>
-            <ModalHeader toggle={toggle}>Creer un candidat</ModalHeader>
+            <ModalHeader toggle={toggle}><strong>Creer un candidat</strong></ModalHeader>
             <ModalBody>
                 <Form
                     onSubmit={onSubmit}
+                    initialValues={{affiliation: "La republique en marche"}}
                     mutators={{...mutators, ...arrayMutators}}
                     render={({handleSubmit, values, form:{mutators}}) => {
                         return (
                             <form onSubmit={handleSubmit}>
+                                <Field name={"password"} validate={required}>
+                                    {props => {
+                                        return <TextInput {...props} label={""} placeholder={"Password"} />
+                                    }}
+                                </Field>
                                 <Field name={"nom"} validate={required}>
                                     {props => {
                                         return <TextInput {...props} label={""} placeholder={"Nom"} />

@@ -15,7 +15,7 @@ const ModalPolitic = ({isOpen, close, politic}) => {
     )
 }
 
-const DisplayPolitics = ({codeCommune, reload, setReload}) => {
+const DisplayPolitics = ({codeCommune, reload, setReload, setIsCreateModalOpen}) => {
     const [politics, setPolitics] = useState([]);
     const [selectedPolitic, setSelectedPolitic] = useState(null);
     const [openModal, setOpenModal] = useState(false);
@@ -54,6 +54,7 @@ const DisplayPolitics = ({codeCommune, reload, setReload}) => {
         <Fragment>
         <div className={"lrem-list"}>
             <ul>
+                <li onClick={() => setIsCreateModalOpen(true)} className={"name-create"}>Créer un candidat</li>
             {politics.map((p, idx) => <PoliticListElement key={`politic_${idx}`} onSelect={onViewProfile} politic={p}/>)}
             </ul>
         </div>

@@ -74,6 +74,10 @@ module.exports = [
         path: "/lrem",
         handler: async (request, h) => {
             try {
+                const { password } = request.payload
+                console.log("Process.API.PASSWORD", process.env.API_PASSWORD)
+                if (password !== process.env.API_PASSWORD)
+                    return h.response("Mauvais mot de passe").code(401);
                 const newPolitic = new PoliticModel({...request.payload})
                 const req = await newPolitic.save().then((res) => {
                     CommuneModel.findOneAndUpdate({codeCommune: res.codeCommune}, {$push: {politics: res._id}}).exec();

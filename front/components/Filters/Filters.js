@@ -5,15 +5,15 @@ import {FieldCheckbox, TextInput} from '../FinalForm/TextInput'
 
 const Filters = ({filters, onSubmit}) => {
 
-    const getPartiField = (idx) =>  <Field name={"parti"}>
+    const getPartiField = (idx) =>  <Field key={`filter_field_${idx}`} name={"parti"}>
         {props => {
-            return <TextInput key={`filter_field_${idx}`} {...props} label={""} placeholder={"Parti"} />
+            return <TextInput  {...props} label={""} placeholder={"Parti"} />
         }}
     </Field>
 
-    const getHiddenLremField = (idx, label) =>  <Field name={"hiddenLrem"} type={"checkbox"}>
+    const getHiddenLremField = (idx, label) =>  <Field key={`filter_field_${idx}`} name={"hiddenLrem"} type={"checkbox"}>
         {props => {
-            return <FieldCheckbox key={`filter_field_${idx}`} {...props} className={'search_filter_hiddenLrem'} label={label} name={"hiddenLrem"} />
+            return <FieldCheckbox  {...props} className={'search_filter_hiddenLrem'} label={label} name={"hiddenLrem"} />
         }}
     </Field>
 

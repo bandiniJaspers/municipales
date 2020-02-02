@@ -26,17 +26,25 @@ export const Card =({title, info}) => {
     )
 }
 
-export const Sources = ({affiliation, sources}) => {
+export const Sources = ({affiliation, sources, idx}) => {
+    const getMainSource = (source) => {
+        const reg = new RegExp("((http|https):\\/\\/)?(w{3}.)?\\w*?(\\w*)")
+        const regexGroups = { httpslash: 1, https:2, www: 3, title:4 };
+        const result = reg.exec(source) || [];
+        if (result.length === 0 || !result.hasOwnProperty(regexGroups.title))
+            return `Source_${idx}`
+        return result[regexGroups.title][0].toUpperCase() + result[regexGroups.title].slice(1)
+    }
     return (
         <div className={'sources'}>
             <div className={'title'}>
-                <strong>{`Cette personne refuse d'afficher son appartenance au parti`}<br/><span className="affiliation">{`${affiliation}`}</span></strong>
+                <strong>{`Cette personne est bien soutenu ou appartient a En Marche malgré les apparences`}</strong>
             </div>
             <div className={"sources-list"}>
                 <strong>Source(s)</strong>
             </div>
             <ul>
-                {sources && sources.map((s, idx) => (<li><a href={s} target="_blank">{`Source_${idx}`}</a></li>))}
+                {sources && sources.map((s, idx) => (<li><a href={s} target="_blank">{getMainSource(s)}</a></li>))}
             </ul>
         </div>
     )
@@ -55,7 +63,7 @@ export const ViewPolitic = ({politic}) => {
         <div className={"mainContainer"}>
             {politic &&
             <div className={'container'}>
-                <div className={"card"}>
+                <div className={"card card-link"}>
                     <div className={'title'}>
                         <strong>Lien pour partager</strong>
                     </div>
@@ -71,7 +79,9 @@ export const ViewPolitic = ({politic}) => {
                 <div className={"file"}>
                     <div className={"information"}>
                         <Name firstname={politic.prenom} lastname={politic.nom}/>
+                        {false &&
                         <Card title={"Nombre de voix aux elections"} info={politic.vote}/>
+                        }
                         <Card title={"Candidat dans la commune de"} info={politic.commune}/>
                         <Card title={"Affilié au mouvement/parti"} info={politic.affiliation}/>
                     </div>

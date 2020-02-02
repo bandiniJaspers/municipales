@@ -1,108 +1,49 @@
-import React, {useState, useEffect, Fragment} from 'react';
-import fetch from 'isomorphic-unfetch'
+import React, { useState, Fragment } from 'react';
+import Head from 'next/head'
 
 import '../front/assets/sass/global.sass'
-import CreateModal from '../front/components/CreateModal'
-import DisplayPolitics from '../front/components/DisplayPolitics/DisplayPolitics'
-import Menu from '../front/components/Menu/Menu';
-import Filters from '../front/components/Filters/Filters'
-import {useFetch} from '../front/components/FetchHook/useFetch'
+import Candidat from '../front/views/Candidat'
+import Commune from '../front/views/Commune'
+import ViewMap from '../front/views/Map'
 
-const Index = () => {
-    const [isOpen, setIsOpen] = useState(false)
-    const { data, updateFilters, loading, searchFilter, filters, setFilters, setSearchFilter, load, setSearchValue} = useFetch('commune/search');
-
-    //@todo better we to communicate between politics list and submit
-    const [reload, setReload] = useState(false);
-
-    const [ selectedCommune, setSelectedCommune] = useState(null);
-
-    const onSubmit = (data) => {
-        fetch("lrem", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                // Validation data coming from a form usually
-                ...data,
-                codeCommune: data.commune.code,
-                commune:data.commune.label
-            })
-        }).then(function (response) {
-            if (response.status === 200) {
-                setReload(true);
-                alert("Ajout réussi");
-            }
-            else
-                alert("Echec de l'ajout")
-            setIsOpen(false);
-        })
-
-    }
-
-    const closeModal = () => setIsOpen(false);
-    const openModal = () => setIsOpen(true);
-
-    const getList = () => {
-        if (!data)
-            return
-        let updatedData = [...data];
-        updatedData = filters.length > 0 ? updatedData : updatedData.slice(0, 30);
-        return updatedData.slice(0, 100).map(
-            (commune, idx) => (
-                <li key={`commune_list_${idx}`} className={"communeElement"} onClick={() => setSelectedCommune(commune)}>{commune.nom}</li>
-            )
-        )
-    }
+const MenuElement = ({title, currentLayout, layoutType, onClick}) => {
     return (
-        <div className={'mainContainer'}>
-            <Menu />
-            <div className={"commune_container"}>
-                <div className={'main_commune'}>
-                    {/*<div className={'filter_container'}>
-                    <div>Toutes les communes</div>
-                    <div>- de 9000 habitants</div>
-                </div>*/}
-                    <div className={'header header_commune'}>
-                        <h1>Rechercher par commune ?</h1>
-                        <Filters onSubmit={updateFilters} filters={[{id:"hiddenLrem", label:"Communes contenant LREMs se prétendants sans étiquette"}]} />
-                    </div>
-                <div className={'content'}>
-                    <input placeholder={"Nom"} onChange={(e) => setSearchValue(e)}/>
-                    <div className={"commune_list"}>
-                        {!loading ?
-                            <Fragment>
-                        <div className={"size-md mt-md mb-md"}><strong>Résultat de recherche : {data ? data.length : 0}</strong>
-                            {data && data.length > 30 &&
-                            <span><br/>Seul les 30 premières communes sont affichées</span>
-                            }
-                        </div>
-                        <ul>
-                            {data && getList()}
-                        </ul>
-                            </Fragment>  : <div>Chargement...</div>
-                            }
-                    </div>
-                </div>
-                <CreateModal toggle={closeModal} isOpen={isOpen} onSubmit={onSubmit} communes={data ? data.slice(0, 30).map((c) => ({label:c.nom, code:c.codeCommune, value:c._id})) : []}/>
-                </div>
-                <div className={"content"}>
-                    <div>
-                        {data && data.length > 0 &&
-                        <div className={"candidat_create_btn"} onClick={openModal}>
-                            + Créer un candidat
-                        </div>
-                        }
-                    </div>
-                    {selectedCommune &&
-                        <DisplayPolitics codeCommune={selectedCommune.codeCommune} reload={reload} setReload={setReload}/>
-                    }
-                </div>
+        <div className={`${currentLayout === layoutType ? 'menu_black' : 'menu_grey'}`} onClick={() => onClick(layoutType)}><span><strong>{title}</strong></span></div>
+    )
+}
+const Index = () => {
+    const layoutEnum = {
+        COMMUNE: "commune",
+        CANDIDAT: "candidat",
+        CARTE: "carte"
+    }
+    const [layout, setLayout] = useState(layoutEnum.CANDIDAT);
+
+    return (
+        <Fragment>
+            <Head>
+                <title>Lrem</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta charSet="utf-8" />
+            </Head>
+            <div className={''}>
+                {layout === layoutEnum.COMMUNE &&
+                   <Commune />
+                }
+                {layout === layoutEnum.CANDIDAT &&
+                    <Candidat/>
+                }
+                {layout === layoutEnum.CARTE &&
+                    <ViewMap />
+                }
             </div>
-        </div>
+            <div className={"menu"}>
+                <MenuElement title={"Rechercher par nom"} currentLayout={layout} layoutType={layoutEnum.CANDIDAT} onClick={setLayout} />
+                <MenuElement title={"Rechercher par commune"} currentLayout={layout} layoutType={layoutEnum.COMMUNE} onClick={setLayout} />
+                <MenuElement title={"Voir la carte"} currentLayout={layout} layoutType={layoutEnum.CARTE} onClick={setLayout} />
+            </div>
+        </Fragment>
     )
 }
 
-export default Index;
+export default Index

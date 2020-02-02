@@ -5,9 +5,38 @@
   position: relative
 
   &::after
-    +triangle(50px, $beige, down-right)
+    +triangle(65px, $beige, down-right)
     right: 0
     top: 0
 
+.name-create
+  padding: 10px 15px
+  background-color: $black
+  color: $beige
+  position: relative
+  cursor: pointer
+  &::after
+    +triangle(65px, $beige, down-right)
+    right: 0
+    top: 0
+
+  &::before
+    +triangle(65px, $beige, up-left)
+    left: 0
+    top: 0
 .name-selected
   background-color: darkred
+
+.commune-name
+  padding: 10px 15px
+  background-color: white
+  border: 2px solid $orange
+  border-right-color: $beige
+  color: black
+  position: relative
+  cursor: pointer
+  &::after
+    +triangle(65px, $beige, down-right)
+    right: 0
+    top: 0
+
