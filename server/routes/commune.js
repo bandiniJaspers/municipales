@@ -31,10 +31,13 @@ module.exports = [
                 if (hiddenLrem) {
                     query = {...query, "politics.0": {$exists:true}}
                 }
-
-                let communes = await CommuneModel.find(query).populate('politics').exec();
-                if (hiddenLrem)
+                let communes;
+                if (!hiddenLrem)
+                    communes = await CommuneModel.find(query).populate('politics').limit(100).exec();
+                else {
+                    communes = await CommuneModel.find(query).populate('politics').exec();
                     communes = communes.filter((c) => c.politics.findIndex((p) => p.hiddenLrem === true) > -1);
+                }
                 return h.response(JSON.stringify(communes)).code(200);
             } catch(error) {
                 h.response(error).code(404)

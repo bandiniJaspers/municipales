@@ -55,6 +55,7 @@ const DisplayPolitics = ({codeCommune, reload, setReload, setIsCreateModalOpen})
         <div className={"lrem-list"}>
             <ul>
                 <li onClick={() => setIsCreateModalOpen(true)} className={"name-create"}>Créer un candidat</li>
+                {politics.length === 0 && <div>Aucun résultat</div>}
             {politics.map((p, idx) => <PoliticListElement key={`politic_${idx}`} onSelect={onViewProfile} politic={p}/>)}
             </ul>
         </div>

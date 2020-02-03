@@ -34,9 +34,9 @@ const ViewMap = (props) => {
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                             />
-                           {data && data.map((d) => {
+                           {data && data.map((d, idx) => {
                                const politic = d.politics.find((l) => l.hiddenLrem === true);
-                               return <Marker position={[parseFloat(d.latitude), parseFloat(d.longitude)]}>
+                               return <Marker key={`marker_${idx}`} position={[parseFloat(d.latitude), parseFloat(d.longitude)]}>
                                    <Popup><div>
                                        <div>
                                            <h1>{d.nom}</h1>

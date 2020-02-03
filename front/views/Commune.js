@@ -19,8 +19,8 @@ const Commune = () => {
         if (!data)
             return
         let updatedData = [...data];
-        updatedData = filters.length > 0 ? updatedData : updatedData.slice(0, 30);
-        return updatedData.slice(0, 100).map(
+        updatedData = filters.length > 0 ? updatedData : updatedData;
+        return updatedData.map(
             (commune, idx) => (
                 <li key={`commune_list_${idx}`} className={"commune-name"} onClick={() => setSelectedCommune(commune)}>{commune.nom}</li>
             )
@@ -43,8 +43,8 @@ const Commune = () => {
                             <Fragment>
                                 <div className={"size-md mt-md mb-md"}><strong>Résultat de recherche
                                     : {data ? data.length : 0}</strong>
-                                    {data && data.length > 30 &&
-                                    <span><br/>Seul les 30 premières communes sont affichées</span>
+                                    {data &&
+                                    <span><br/>Seul les 100 premières communes sont affichées</span>
                                     }
                                 </div>
                                 <ul>
