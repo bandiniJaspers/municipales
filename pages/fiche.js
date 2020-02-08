@@ -80,7 +80,9 @@ const Fiche = (props) => {
                                 </a>
                             </Link>
                             <Name firstname={fiche.prenom} lastname={fiche.nom}/>
+                            {false &&
                             <Card title={"Nombre de voix aux elections"} info={fiche.vote}/>
+                            }
                             <Card title={"Candidat dans la commune de"} info={fiche.commune}/>
                             <Card title={"Affilié au mouvement/parti"} info={fiche.affiliation}/>
                         </div>

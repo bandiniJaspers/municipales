@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const dotenv = require("dotenv");
 const withSass = require('@zeit/next-sass');
 const withFonts = require('nextjs-fonts');
-
+const withImages = require('next-images')
 
 dotenv.config();
 
@@ -22,6 +22,7 @@ module.exports = withSass(withFonts({
         localIdentName: "[local]___[hash:base64:5]",
     },
   webpack(config, options) {
-    return config;  }
+    return config;
+  }
   }
 ));
