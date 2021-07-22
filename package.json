@@ -48,7 +48,7 @@
     "reactstrap": "^8.4.0",
     "request": "^2.88.0",
     "url-loader": "^3.0.0",
-    "xlsx": "^0.15.3",
+    "xlsx": "^0.17.0",
     "yaml": "^1.7.2"
   },
   "devDependencies": {
